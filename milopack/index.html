@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>miloPack — @oldmilo</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><clipPath id='circle'><circle cx='50' cy='50' r='50'/></clipPath><image href='../foto.jpg' width='100' height='100' clip-path='url(%23circle)'/></svg>">
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- FONDO CON MALLA Y LUCES -->
+  <div class="bg">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap" style="max-width: 480px;">
+      <div class="pack-container" id="tiltCard">
+
+        <!-- Header / Logo + Título -->
+        <div class="pack-header animate-item">
+          <div class="pack-logo-wrap">
+            <img class="pack-logo" src="../foto.jpg" alt="miloPack Logo">
+          </div>
+          <h1 class="pack-title">miloPack</h1>
+        </div>
+
+        <!-- Video de YouTube -->
+        <div class="video-box animate-item">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="miloPack Review" allowfullscreen></iframe>
+        </div>
+
+        <!-- Bloque de Descarga -->
+        <div class="download-card animate-item">
+          <p class="download-title">Descargar para Minecraft 1.8.9 / 1.20+ (Java Edition)</p>
+          
+          <div class="download-btns">
+            <button class="dl-btn">Windows</button>
+            <button class="dl-btn">macOS</button>
+          </div>
+
+          <p class="download-note">
+            Si tienes problemas al descargar, prueba a desactivar tu bloqueador de anuncios.
+          </p>
+        </div>
+
+        <!-- Botones Secundarios -->
+        <div class="sub-pills animate-item">
+          <a class="pill-btn" href="#">Recursos para creadores</a>
+          <a class="pill-btn" href="#">Versiones anteriores</a>
+          <a class="pill-btn" href="#">Historial de cambios</a>
+          <a class="pill-btn primary-pill" href="/">oldmilo.xyz</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 1. Animaciones de Entrada
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+      }, 100);
+    });
+
+    // 2. Partículas al mover el ratón
+    let lastSparkleTime = 0;
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastSparkleTime > 40) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = (e.clientX + (Math.random() * 10 - 5)) + 'px';
+        sparkle.style.top = (e.clientY + (Math.random() * 10 - 5)) + 'px';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+        lastSparkleTime = now;
+      }
+    });
+
+    // 3. Inclinación 3D
+    const card = document.getElementById('tiltCard');
+    if (card) {
+      document.addEventListener('mousemove', (e) => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+        const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+        card.style.transform = `rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  </script>
+</body>
+</html>

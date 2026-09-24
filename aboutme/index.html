@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Mí — @oldmilo</title>
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><clipPath id='circle'><circle cx='50' cy='50' r='50'/></clipPath><image href='../foto.jpg' width='100' height='100' clip-path='url(%23circle)'/></svg>">
+
+  <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- FONDO CON MALLA Y LUCES -->
+  <div class="bg">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap" style="max-width: 420px;">
+      <div class="card" id="tiltCard">
+
+        <!-- Avatar -->
+        <div class="avatar-wrap animate-item">
+          <img class="avatar" src="../foto.jpg" alt="Camilo">
+        </div>
+
+        <!-- Saludo y Handle -->
+        <div class="animate-item">
+          <h1 class="greeting">Hola, soy Camilo</h1>
+          <div class="handle">@oldmilo</div>
+        </div>
+
+        <!-- Píldoras de Info -->
+        <div class="sub-pills animate-item">
+          <span class="pill-btn">🎂 21 AÑOS</span>
+          <span class="pill-btn">📍 ESPAÑA</span>
+          <span class="pill-btn">🎮 GAMING & TECH</span>
+        </div>
+
+        <!-- Bio Glass Box -->
+        <div class="bio-box animate-item">
+          <h3 class="bio-title">✨ Sobre Mí</h3>
+          <p class="bio-text">
+            Nací en Colombia y actualmente vivo en España. Apasionado del mundo gaming, la tecnología, el desarrollo web y la creación de contenido digital.
+          </p>
+        </div>
+
+        <!-- Botón Volver al Inicio -->
+        <a class="action-btn animate-item" href="/">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Volver al inicio
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 1. Animaciones de Entrada
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+      }, 100);
+    });
+
+    // 2. Partículas al mover el ratón
+    let lastSparkleTime = 0;
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastSparkleTime > 40) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = (e.clientX + (Math.random() * 10 - 5)) + 'px';
+        sparkle.style.top = (e.clientY + (Math.random() * 10 - 5)) + 'px';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+        lastSparkleTime = now;
+      }
+    });
+
+    // 3. Inclinación 3D
+    const card = document.getElementById('tiltCard');
+    if (card) {
+      document.addEventListener('mousemove', (e) => {
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+        const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+        card.style.transform = `rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
+      });
+
+      document.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+  </script>
+</body>
+</html>
