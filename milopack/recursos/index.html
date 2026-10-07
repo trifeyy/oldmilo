@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursos para creadores — miloPack</title>
+  <meta name="description" content="Logo, texto para la descripción y normas para usar miloPack en tus vídeos y directos.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/milopack/recursos/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Recursos para creadores — miloPack">
+  <meta property="og:description" content="Logo, texto para la descripción y normas para usar miloPack en tus vídeos y directos.">
+  <meta property="og:url" content="https://oldmilo.xyz/milopack/recursos/">
+  <meta property="og:image" content="https://oldmilo.xyz/milopack/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="miloPack — Pack de texturas para Minecraft">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-lg">
+      <div class="pack-container" id="tiltCard" data-tilt="3">
+
+        <header class="sub-header animate-item">
+          <a class="back-btn" href="/milopack/" aria-label="Volver a miloPack"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+          <img class="pack-logo is-square is-small" src="/milopack/logo.svg" alt="" width="48" height="48">
+          <div>
+            <p class="eyebrow">miloPack</p>
+            <h1 class="sub-title">Recursos para creadores</h1>
+          </div>
+        </header>
+
+        <nav class="sub-tabs animate-item" aria-label="Secciones de miloPack">
+          <a class="sub-tab" href="/milopack/recursos/" aria-current="page"><span class="tab-indicator" aria-hidden="true"></span><span>Recursos</span></a>
+          <a class="sub-tab" href="/milopack/versiones/"><span>Versiones</span></a>
+          <a class="sub-tab" href="/milopack/historial/"><span>Historial</span></a>
+        </nav>
+
+        <section class="panel animate-item">
+          <p class="panel-text">¿Vas a usar miloPack en un vídeo, short o directo? ¡Adelante! Aquí tienes todo lo que necesitas.</p>
+        </section>
+
+        <section class="panel animate-item" aria-labelledby="r-logo">
+          <h2 class="panel-title" id="r-logo">Logo</h2>
+          <div class="asset-row">
+            <img src="/milopack/logo.svg" alt="Logo de miloPack" width="72" height="72">
+            <div>
+              <p class="panel-text muted">Úsalo en miniaturas o en pantalla. Mejor sin deformarlo ni cambiarle los colores.</p>
+              <div class="asset-btns">
+                <a class="dl-btn dl-btn-sm" href="/milopack/logo.png" download="milopack-logo.png"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zm7-18-1.4 1.4L11 4v10.2l-4.6-4.6L5 11l7 7 7-7-1.4-1.4-4.6 4.6V4l.4-.6z"/></svg> PNG 512px</a>
+                <a class="dl-btn dl-btn-sm" href="/milopack/logo.svg" download="milopack-logo.svg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zm7-18-1.4 1.4L11 4v10.2l-4.6-4.6L5 11l7 7 7-7-1.4-1.4-4.6 4.6V4l.4-.6z"/></svg> SVG</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel animate-item" aria-labelledby="r-desc">
+          <h2 class="panel-title" id="r-desc">Texto para la descripción</h2>
+          <p class="panel-text muted">Copia esto en la descripción de tu vídeo para que la gente encuentre el pack:</p>
+          <div class="copy-box">
+            <span id="creditText">Pack de texturas: miloPack por @oldmilo → https://oldmilo.xyz/milopack</span>
+            <button class="copy-btn" type="button" data-copy="#creditText" aria-live="polite">Copiar</button>
+          </div>
+        </section>
+
+        <section class="panel animate-item" aria-labelledby="r-rules">
+          <h2 class="panel-title" id="r-rules">Normas de uso</h2>
+          <ul class="rules">
+            <li class="yes"><span class="mark" aria-hidden="true">✓</span><span><span class="sr-only">Permitido: </span>Úsalo en vídeos, shorts y directos, también monetizados.</span></li>
+            <li class="yes"><span class="mark" aria-hidden="true">✓</span><span><span class="sr-only">Permitido: </span>Edítalo para uso personal como quieras.</span></li>
+            <li class="no"><span class="mark" aria-hidden="true">✕</span><span><span class="sr-only">No permitido: </span>Resubirlo a otras webs o venderlo.</span></li>
+            <li class="no"><span class="mark" aria-hidden="true">✕</span><span><span class="sr-only">No permitido: </span>Compartirlo con acortadores de enlaces con anuncios. Enlaza siempre a oldmilo.xyz/milopack.</span></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>

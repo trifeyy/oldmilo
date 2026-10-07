@@ -3,20 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobre Mí — @oldmilo</title>
+  <title>Sobre mí — oldmilo</title>
+  <meta name="description" content="Soy Camilo: nací en Colombia, vivo en España y me apasionan el gaming, la tecnología, el desarrollo web y la creación de contenido.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/aboutme/">
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><clipPath id='circle'><circle cx='50' cy='50' r='50'/></clipPath><image href='../foto.jpg' width='100' height='100' clip-path='url(%23circle)'/></svg>">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Sobre mí — oldmilo">
+  <meta property="og:description" content="Soy Camilo: nací en Colombia, vivo en España y me apasionan el gaming, la tecnología, el desarrollo web y la creación de contenido.">
+  <meta property="og:url" content="https://oldmilo.xyz/aboutme/">
+  <meta property="og:image" content="https://oldmilo.xyz/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="oldmilo — Sobre mí">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-  <!-- FONDO CON MALLA Y LUCES -->
-  <div class="bg">
+  <div class="bg" aria-hidden="true">
     <div class="bg-grid"></div>
     <div class="blob blob-a"></div>
     <div class="blob blob-b"></div>
@@ -24,38 +47,33 @@
   </div>
 
   <main class="stage">
-    <div class="card-border-wrap" style="max-width: 420px;">
+    <div class="card-border-wrap wrap-md">
       <div class="card" id="tiltCard">
 
-        <!-- Avatar -->
         <div class="avatar-wrap animate-item">
-          <img class="avatar" src="../foto.jpg" alt="Camilo">
+          <img class="avatar" src="/foto.jpg" alt="Foto de Camilo" width="84" height="84">
         </div>
 
-        <!-- Saludo y Handle -->
         <div class="animate-item">
           <h1 class="greeting">Hola, soy Camilo</h1>
           <div class="handle">@oldmilo</div>
         </div>
 
-        <!-- Píldoras de Info -->
-        <div class="sub-pills animate-item">
-          <span class="pill-btn">🎂 21 AÑOS</span>
-          <span class="pill-btn">📍 ESPAÑA</span>
-          <span class="pill-btn">🎮 GAMING & TECH</span>
-        </div>
+        <ul class="sub-pills animate-item">
+          <li class="pill-btn">🎂 <span data-age>21</span> AÑOS</li>
+          <li class="pill-btn">📍 ESPAÑA</li>
+          <li class="pill-btn">🎮 GAMING &amp; TECH</li>
+        </ul>
 
-        <!-- Bio Glass Box -->
         <div class="bio-box animate-item">
-          <h3 class="bio-title">✨ Sobre Mí</h3>
+          <h2 class="bio-title">✨ Sobre mí</h2>
           <p class="bio-text">
             Nací en Colombia y actualmente vivo en España. Apasionado del mundo gaming, la tecnología, el desarrollo web y la creación de contenido digital.
           </p>
         </div>
 
-        <!-- Botón Volver al Inicio -->
         <a class="action-btn animate-item" href="/">
-          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
           Volver al inicio
         </a>
 
@@ -63,43 +81,6 @@
     </div>
   </main>
 
-  <script>
-    // 1. Animaciones de Entrada
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        document.body.classList.add('loaded');
-      }, 100);
-    });
-
-    // 2. Partículas al mover el ratón
-    let lastSparkleTime = 0;
-    document.addEventListener('mousemove', (e) => {
-      const now = Date.now();
-      if (now - lastSparkleTime > 40) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.style.left = (e.clientX + (Math.random() * 10 - 5)) + 'px';
-        sparkle.style.top = (e.clientY + (Math.random() * 10 - 5)) + 'px';
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 800);
-        lastSparkleTime = now;
-      }
-    });
-
-    // 3. Inclinación 3D
-    const card = document.getElementById('tiltCard');
-    if (card) {
-      document.addEventListener('mousemove', (e) => {
-        const { innerWidth, innerHeight } = window;
-        const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
-        const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
-        card.style.transform = `rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
-      });
-
-      document.addEventListener('mouseleave', () => {
-        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
-      });
-    }
-  </script>
+  <script src="/script.js"></script>
 </body>
 </html>

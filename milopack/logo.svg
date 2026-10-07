@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>miloPack</title>
+  <defs>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9aa1b4"/>
+      <stop offset=".45" stop-color="#454a59"/>
+      <stop offset="1" stop-color="#6b7183"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20232d"/>
+      <stop offset=".55" stop-color="#101219"/>
+      <stop offset="1" stop-color="#08090c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#c9d0e6" stop-opacity=".34"/>
+      <stop offset=".55" stop-color="#7882a0" stop-opacity=".10"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="frame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".75"/>
+      <stop offset=".5" stop-color="#c3c8d6" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".55"/>
+    </linearGradient>
+    <linearGradient id="inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b1e27"/>
+      <stop offset="1" stop-color="#0d0f14"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="2.2" numOctaves="2" seed="4"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0"/>
+    </filter>
+    <filter id="halo" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+    <clipPath id="clip"><rect width="100" height="100" rx="23"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#clip)">
+    <!-- borde brillante difuminado -->
+    <rect width="100" height="100" fill="url(#rim)"/>
+    <rect x="1.00" y="1.00" width="98.00" height="98.00" rx="22.20" fill="url(#body)" opacity="0.062"/>
+    <rect x="1.38" y="1.38" width="97.24" height="97.24" rx="21.90" fill="url(#body)" opacity="0.070"/>
+    <rect x="1.76" y="1.76" width="96.48" height="96.48" rx="21.59" fill="url(#body)" opacity="0.084"/>
+    <rect x="2.14" y="2.14" width="95.72" height="95.72" rx="21.29" fill="url(#body)" opacity="0.105"/>
+    <rect x="2.52" y="2.52" width="94.96" height="94.96" rx="20.98" fill="url(#body)" opacity="0.133"/>
+    <rect x="2.90" y="2.90" width="94.20" height="94.20" rx="20.68" fill="url(#body)" opacity="0.169"/>
+    <rect x="3.28" y="3.28" width="93.44" height="93.44" rx="20.38" fill="url(#body)" opacity="0.213"/>
+    <rect x="3.66" y="3.66" width="92.68" height="92.68" rx="20.07" fill="url(#body)" opacity="0.265"/>
+    <rect x="4.04" y="4.04" width="91.92" height="91.92" rx="19.77" fill="url(#body)" opacity="0.325"/>
+    <rect x="4.42" y="4.42" width="91.16" height="91.16" rx="19.46" fill="url(#body)" opacity="0.394"/>
+    <rect x="4.80" y="4.80" width="90.40" height="90.40" rx="19.16" fill="url(#body)" opacity="0.472"/>
+    <rect x="5.18" y="5.18" width="89.64" height="89.64" rx="18.86" fill="url(#body)" opacity="0.559"/>
+    <rect x="5.56" y="5.56" width="88.88" height="88.88" rx="18.55" fill="url(#body)" opacity="0.655"/>
+    <rect x="5.94" y="5.94" width="88.12" height="88.12" rx="18.25" fill="url(#body)" opacity="0.761"/>
+    <rect x="6.32" y="6.32" width="87.36" height="87.36" rx="17.94" fill="url(#body)" opacity="0.876"/>
+    <rect x="6.70" y="6.70" width="86.60" height="86.60" rx="17.64" fill="url(#body)" opacity="1.000"/>
+    <rect width="100" height="100" filter="url(#grain)"/>
+  </g>
+
+  <!-- marco interior -->
+  <rect x="21.5" y="21.5" width="57" height="57" rx="15" fill="url(#inner)"/>
+  <rect x="21.5" y="21.5" width="57" height="57" rx="15" fill="url(#glow)"/>
+  <rect x="21.5" y="21.5" width="57" height="57" rx="15" fill="none" stroke="url(#frame)" stroke-width="3.6"/>
+
+  <!-- M -->
+  <path d="M36.5 61V42.5c0-3.4 4-4.6 5.9-1.8L50 52l7.6-11.3c1.9-2.8 5.9-1.6 5.9 1.8V61"
+        fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#halo)"/>
+  <path d="M36.5 61V42.5c0-3.4 4-4.6 5.9-1.8L50 52l7.6-11.3c1.9-2.8 5.9-1.6 5.9 1.8V61"
+        fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
