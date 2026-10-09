@@ -1820,6 +1820,295 @@ a.discord-widget:hover {
 }
 
 /* =========================================================
+   MI SETUP
+   ========================================================= */
+.card-border-wrap.wrap-xl { max-width: 680px; }
+
+html { scroll-behavior: smooth; }
+
+.setup-page { text-align: left; }
+
+.avatar.is-small-avatar {
+  width: 48px;
+  height: 48px;
+}
+
+.setup-hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  text-align: center;
+}
+
+.hero-stat strong {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.hero-stat small {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.chip {
+  padding: 7px 13px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  transition: all 0.25s ease;
+}
+
+.chip:hover {
+  background: #ffffff;
+  color: #0b0c10;
+  border-color: #ffffff;
+}
+
+.setup-section {
+  margin-bottom: 24px;
+  scroll-margin-top: 20px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  margin: 0 0 12px;
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.18), transparent);
+}
+
+/* Specs del PC */
+.spec-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.spec-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--glass-border);
+}
+
+.spec-icon,
+.gear-media {
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+}
+
+.spec-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+}
+
+.spec-icon svg,
+.gear-media svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.spec-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.spec-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.spec-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.spec-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Tarjetas de periféricos */
+.gear-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.gear-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--glass-border);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gear-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+}
+
+.gear-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.1), transparent 65%),
+    rgba(255, 255, 255, 0.025);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.gear-media svg {
+  width: 44px;
+  height: 44px;
+  stroke-width: 1.3;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.25));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gear-card:hover .gear-media svg { transform: scale(1.12) rotate(-4deg); }
+
+.gear-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gear-qty {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #0b0c10;
+}
+
+.gear-body { padding: 12px 14px 14px; }
+
+.gear-cat {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.gear-name {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 2px 0 6px;
+  line-height: 1.25;
+}
+
+.gear-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.setup-note {
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+/* Aparición al hacer scroll */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-ready .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 520px) {
+  .spec-list { grid-template-columns: 1fr; }
+  .gear-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .gear-body { padding: 10px 11px 12px; }
+  .gear-name { font-size: 13.5px; }
+  .gear-desc { font-size: 11.5px; }
+  .hero-stat { padding: 10px 6px; }
+  .hero-stat strong { font-size: 12.5px; }
+}
+
+/* =========================================================
    TRANSICIONES ENTRE PÁGINAS
    ========================================================= */
 

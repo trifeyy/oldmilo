@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi setup — oldmilo</title>
+  <meta name="description" content="Mi PC (Ryzen 7 5700X + RTX 4070 SUPER), monitores, periféricos, audio y todo lo que uso para jugar y crear contenido.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/setup/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Mi setup — oldmilo">
+  <meta property="og:description" content="Mi PC (Ryzen 7 5700X + RTX 4070 SUPER), monitores, periféricos, audio y todo lo que uso para jugar y crear contenido.">
+  <meta property="og:url" content="https://oldmilo.xyz/setup/">
+  <meta property="og:image" content="https://oldmilo.xyz/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="oldmilo — Mi setup">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+  </script>
+
+  <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=6">
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-xl">
+      <div class="pack-container setup-page" id="tiltCard" data-tilt="2">
+
+        <header class="sub-header animate-item">
+          <a class="back-btn" href="/" aria-label="Volver al inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+          <img class="avatar is-small-avatar" src="/foto.jpg" alt="" width="48" height="48">
+          <div>
+            <p class="eyebrow">oldmilo</p>
+            <h1 class="sub-title">Mi setup</h1>
+          </div>
+        </header>
+
+        <div class="setup-hero animate-item">
+          <span class="hero-stat"><strong>RTX 4070 SUPER</strong><small>Gráfica</small></span>
+          <span class="hero-stat"><strong>Ryzen 7 5700X</strong><small>Procesador</small></span>
+          <span class="hero-stat"><strong>2× 240 Hz</strong><small>Monitores</small></span>
+        </div>
+
+        <nav class="chips animate-item" aria-label="Secciones del setup">
+          <a class="chip" href="#pc">PC</a><a class="chip" href="#pantallas">Pantallas</a><a class="chip" href="#perifericos">Periféricos</a><a class="chip" href="#audio">Audio</a><a class="chip" href="#contenido">Creación de contenido</a><a class="chip" href="#software">Software</a>
+        </nav>
+
+        <section class="setup-section animate-item" id="pc" aria-labelledby="h-pc">
+          <h2 class="section-title" id="h-pc">Mi PC</h2>
+          <ul class="spec-list">
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Procesador</span><span class="spec-value">AMD Ryzen 7 5700X</span><span class="spec-sub">8 núcleos · 16 hilos · hasta 4,6 GHz</span></span>
+          </li>
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="11" rx="2"/><circle cx="9" cy="11.5" r="3"/><circle cx="16" cy="11.5" r="1.5"/><path d="M5 17v3M2 20h4"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Tarjeta gráfica</span><span class="spec-value">NVIDIA GeForce RTX 4070 SUPER</span><span class="spec-sub">12 GB GDDR6X · DLSS · ray tracing</span></span>
+          </li>
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="9" rx="1.5"/><path d="M6 10v3M10 10v3M14 10v3M18 10v3M5 16v2M19 16v2"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Memoria RAM</span><span class="spec-value">32 GB DDR4</span></span>
+          </li>
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="6" height="6" rx="1"/><path d="M16 7h2M16 10h2M7 16h11"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Placa base</span><span class="spec-value">Gigabyte B550M DS3H</span><span class="spec-sub">Micro-ATX · socket AM4</span></span>
+          </li>
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="8" width="20" height="8" rx="1.5"/><path d="M6 11h7M6 13h4"/><circle cx="18" cy="12" r="1"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Almacenamiento</span><span class="spec-value">Lexar NM710 1 TB</span><span class="spec-sub">SSD NVMe M.2 PCIe 4.0</span></span>
+          </li>
+          <li class="spec-row">
+            <span class="spec-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5 10.5 4.5v7H3zM12 4.3 21 3v8.5h-9zM3 12.5h7.5v7L3 18.5zM12 12.5h9V21l-9-1.3z"/></svg></span>
+            <span class="spec-text"><span class="spec-label">Sistema</span><span class="spec-value">Windows 10 Pro</span><span class="spec-sub">64 bits · DirectX 12</span></span>
+          </li>
+          </ul>
+        </section>
+
+        <section class="setup-section animate-item" id="pantallas" aria-labelledby="h-pantallas">
+          <h2 class="section-title" id="h-pantallas">Pantallas</h2>
+          <ul class="gear-grid">
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg><span class="gear-qty">x2</span></div>
+              <div class="gear-body">
+                <span class="gear-cat">Monitor</span>
+                <h3 class="gear-name">Samsung Odyssey C27RG50</h3>
+                <p class="gear-desc">27&quot; curvo, 1080p y 240 Hz. Tengo dos: uno en horizontal para jugar y otro en vertical para Discord, chat y lo que haga falta.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21h6M7 21V14l6-5 4 3"/><rect x="15" y="3" width="7" height="6" rx="1" transform="rotate(20 18 6)"/><circle cx="7" cy="14" r="1"/><circle cx="13" cy="9" r="1"/></svg><span class="gear-qty">x2</span></div>
+              <div class="gear-body">
+                <span class="gear-cat">Soporte</span>
+                <h3 class="gear-name">Brazos de monitor individuales</h3>
+                <p class="gear-desc">Un brazo para cada pantalla. Dejan la mesa libre y me dejan girar el monitor a vertical en segundos.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="3" rx="1.5"/><path d="M8 11l-2 3M12 11v4M16 11l2 3"/><path d="M12 8v0"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Iluminación</span>
+                <h3 class="gear-name">Xiaomi Mi Monitor Light Bar</h3>
+                <p class="gear-desc">Barra de luz encima del monitor que ilumina la mesa sin reflejos en la pantalla. Temperatura y brillo regulables con mando.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="setup-section animate-item" id="perifericos" aria-labelledby="h-perifericos">
+          <h2 class="section-title" id="h-perifericos">Periféricos</h2>
+          <ul class="gear-grid">
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 6v4"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Ratón</span>
+                <h3 class="gear-name">Glorious Model O</h3>
+                <p class="gear-desc">Ultraligero con diseño de panal. Muy rápido para shooters y PvP.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 6v4"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Ratón</span>
+                <h3 class="gear-name">Bloody A70</h3>
+                <p class="gear-desc">Ratón gaming de A4Tech con switches ópticos Light Strike y macros.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Teclado</span>
+                <h3 class="gear-name">Attack Shark X68HE</h3>
+                <p class="gear-desc">65% con switches magnéticos Hall Effect: actuación ajustable y rapid trigger.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Teclado</span>
+                <h3 class="gear-name">Ajazz AK820 Pro</h3>
+                <p class="gear-desc">75% gasket mount con pantallita, inalámbrico y switches intercambiables. Suena genial.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4v4H4zM6 8v2c0 2 4 1 4 3s-4 1-4 3 4 1 4 3-4 1-4 3"/><path d="M16 14h4v4h-4zM18 14v-4a3 3 0 0 0-3-3h-3"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Cable</span>
+                <h3 class="gear-name">Cable en espiral EpoMaker</h3>
+                <p class="gear-desc">Cable USB-C enrollado tipo aviador para el teclado. Puro estilo.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2.5"/><path d="M15 9.5a2 2 0 0 1 2 2v1a2 2 0 0 1-4 0v-1a2 2 0 0 1 2-2z"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Alfombrilla</span>
+                <h3 class="gear-name">Corsair MM250</h3>
+                <p class="gear-desc">Alfombrilla de tela con buen control y base de goma que no se mueve.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="setup-section animate-item" id="audio" aria-labelledby="h-audio">
+          <h2 class="section-title" id="h-audio">Audio</h2>
+          <ul class="gear-grid">
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Micrófono</span>
+                <h3 class="gear-name">Fifine K688</h3>
+                <p class="gear-desc">Micrófono dinámico USB/XLR con patrón cardioide. Capta la voz y deja fuera el ruido del teclado.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21h6M7 21V14l6-5 4 3"/><rect x="15" y="3" width="7" height="6" rx="1" transform="rotate(20 18 6)"/><circle cx="7" cy="14" r="1"/><circle cx="13" cy="9" r="1"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Soporte</span>
+                <h3 class="gear-name">Brazo de micrófono</h3>
+                <p class="gear-desc">Brazo articulado para tener el micro siempre bien colocado.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 7v10M12 7v10M16 7v10"/><rect x="6.5" y="9" width="3" height="2" rx=".5"/><rect x="10.5" y="13" width="3" height="2" rx=".5"/><rect x="14.5" y="10" width="3" height="2" rx=".5"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Mezclador</span>
+                <h3 class="gear-name">Fifine AmpliGame SC3</h3>
+                <p class="gear-desc">Mezclador de audio con entrada XLR, faders, botón de silencio y luces RGB.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3a3.5 3.5 0 0 0-1 6.8V20a1.5 1.5 0 0 0 3 0V6.5A3.5 3.5 0 0 0 7 3zM17 3a3.5 3.5 0 0 1 1 6.8V20a1.5 1.5 0 0 1-3 0V6.5A3.5 3.5 0 0 1 17 3z"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Auriculares</span>
+                <h3 class="gear-name">KZ Castor</h3>
+                <p class="gear-desc">In-ear con doble driver dinámico e interruptores para ajustar el sonido. Ideales para oír pasos.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3a3.5 3.5 0 0 0-1 6.8V20a1.5 1.5 0 0 0 3 0V6.5A3.5 3.5 0 0 0 7 3zM17 3a3.5 3.5 0 0 1 1 6.8V20a1.5 1.5 0 0 1-3 0V6.5A3.5 3.5 0 0 1 17 3z"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Auriculares</span>
+                <h3 class="gear-name">AirPods Pro 3</h3>
+                <p class="gear-desc">Para el día a día, con cancelación de ruido.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="setup-section animate-item" id="contenido" aria-labelledby="h-contenido">
+          <h2 class="section-title" id="h-contenido">Creación de contenido</h2>
+          <ul class="gear-grid">
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h3l1.5-2h4L13 8h8v11H3z"/><circle cx="12" cy="13" r="3.5"/><path d="M17 11h1"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Cámara</span>
+                <h3 class="gear-name">Sony A6300 + gran angular</h3>
+                <p class="gear-desc">Cámara sin espejo APS-C que graba en 4K. Con el gran angular entra todo el setup en plano.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v7a3 3 0 0 1-6 0z"/><path d="M12 13v3c0 2.5 2 4 4.5 4H20"/><path d="M5 7l2 1M5 11h2"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Micrófonos</span>
+                <h3 class="gear-name">Micrófonos inalámbricos Hollyland</h3>
+                <p class="gear-desc">Micros de solapa inalámbricos para grabar la voz limpia con la cámara.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 5h4M11 19h2"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Móvil</span>
+                <h3 class="gear-name">iPhone 16 Pro Max · 1 TB</h3>
+                <p class="gear-desc">Graba en 4K a 120 fps. También lo uso como webcam con Camo.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <section class="setup-section animate-item" id="software" aria-labelledby="h-software">
+          <h2 class="section-title" id="h-software">Software</h2>
+          <ul class="gear-grid">
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Audio</span>
+                <h3 class="gear-name">SteelSeries Sonar</h3>
+                <p class="gear-desc">Separa el sonido del juego, el chat y la música, y ecualiza el micro.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Webcam</span>
+                <h3 class="gear-name">Camo</h3>
+                <p class="gear-desc">Para usar el iPhone como webcam en el PC.</p>
+              </div>
+            </li>
+            <li class="gear-card">
+              <div class="gear-media"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4-2.5z"/></svg></div>
+              <div class="gear-body">
+                <span class="gear-cat">Clips</span>
+                <h3 class="gear-name">Medal</h3>
+                <p class="gear-desc">Para guardar y compartir mis mejores jugadas.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <p class="setup-note animate-item">Y lo que falta por llegar… 👀</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js?v=6"></script>
+</body>
+</html>

@@ -183,6 +183,26 @@ const PLAYLIST = [
     });
   }
 
+  // Aparición de tarjetas al hacer scroll
+  const revealItems = document.querySelectorAll('.gear-card, .spec-row');
+  if (revealItems.length && 'IntersectionObserver' in window && !reduceMotion) {
+    document.documentElement.classList.add('reveal-ready');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        const el = en.target;
+        el.classList.add('is-visible');
+        io.unobserve(el);
+        setTimeout(() => { el.classList.remove('reveal', 'is-visible'); el.style.transitionDelay = ''; }, 800);
+      });
+    }, { threshold: 0.15 });
+    revealItems.forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = (i % 3) * 60 + 'ms';
+      io.observe(el);
+    });
+  }
+
   // Reproductor de música
   const player = document.getElementById('player');
   if (player) {
