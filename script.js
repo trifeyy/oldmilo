@@ -7,6 +7,17 @@ const CONFIG = {
   birthDate: '2004-12-12'
 };
 
+const PLAYLIST = [
+  { id: '4WkyOBjeLPk7rAisyKl0uN', title: 'VETE A LA FREGADA', artist: 'Eslabon Armado', cover: '5ba60b8e0ba5ed0d8b275ca2' },
+  { id: '3vP62cjz1b4QvUS5vSyEVY', title: 'La Canción Feliz Del Disco', artist: 'Eladio Carrión, Milo J', cover: 'ec105eaf625391e95540ba97' },
+  { id: '5WEF0icHWmAZBBMglBd599', title: 'WELTiTA', artist: 'Bad Bunny, Chuwi', cover: 'bbd45c8d36e0e045ef640411' },
+  { id: '6VNXmo59yDYgcwLS17UNAW', title: 'CAFé CON RON', artist: 'Bad Bunny, Los Pleneros de la Cresta', cover: 'bbd45c8d36e0e045ef640411' },
+  { id: '6r6IPuFvUX72kQGc9b46rk', title: 'Amor', artist: 'Emmanuel Cortes', cover: 'c6c1db32c9b68f4659795763' },
+  { id: '4dWY6RpM9zmYvwqxrNvwtV', title: 'Tocame', artist: 'La Santa Grifa', cover: '3d97cd87f1d68903bf1ea3a6' },
+  { id: '2pPjtn3Pd3nTueJXeizwGk', title: 'Niña Elegante', artist: 'La Santa Grifa', cover: '2984d4cb03ccde15afc59b90' },
+  { id: '1wYFvhxzKJ8W3B8TM0Ag2k', title: 'Aparentemente', artist: 'Yaga & Mackie, Arcángel, De La Ghetto', cover: '3805b73889aebcf17d527d3d' }
+];
+
 (() => {
   const root = document.documentElement;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -170,6 +181,139 @@ const CONFIG = {
     window.addEventListener('pageshow', (e) => {
       if (e.persisted) root.classList.remove('is-leaving');
     });
+  }
+
+  // Reproductor de música
+  const player = document.getElementById('player');
+  if (player) {
+    const $ = (id) => document.getElementById(id);
+    const list = $('playerList');
+    const coverUrl = (hash, size) => `https://i.scdn.co/image/ab67616d0000${size === 'sm' ? '4851' : '1e02'}${hash}`;
+    const fmt = (ms) => {
+      const t = Math.max(0, Math.floor(ms / 1000));
+      return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+    };
+
+    let current = 0;
+    let controller = null;
+    let apiRequested = false;
+    let playWhenReady = false;
+    let isPaused = true;
+    let duration = 0;
+    let position = 0;
+    let wasPlaying = false;
+
+    PLAYLIST.forEach((t, i) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<button type="button" class="player-track">
+          <img src="${coverUrl(t.cover, 'sm')}" alt="" width="36" height="36" loading="lazy">
+          <span class="player-track-text"><span class="player-track-title"></span><span class="player-track-artist"></span></span>
+          <span class="music-eq" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>`;
+      li.querySelector('.player-track-title').textContent = t.title;
+      li.querySelector('.player-track-artist').textContent = t.artist;
+      li.querySelector('button').addEventListener('click', () => select(i, true));
+      list.appendChild(li);
+    });
+
+    const paint = () => {
+      const t = PLAYLIST[current];
+      $('playerCover').src = coverUrl(t.cover);
+      $('playerCover').alt = `Portada de ${t.title}`;
+      $('playerTitle').textContent = t.title;
+      $('playerArtist').textContent = t.artist;
+      [...list.children].forEach((li, i) => {
+        const b = li.querySelector('button');
+        b.classList.toggle('is-current', i === current);
+        if (i === current) b.setAttribute('aria-current', 'true');
+        else b.removeAttribute('aria-current');
+      });
+      paintState();
+    };
+
+    const paintState = () => {
+      const playing = !isPaused;
+      player.classList.toggle('is-playing', playing);
+      document.getElementById('musicBtn')?.classList.toggle('is-playing', playing);
+      $('playerPlay').setAttribute('aria-label', playing ? 'Pausar' : 'Reproducir');
+      $('playerPos').textContent = fmt(position);
+      $('playerDur').textContent = fmt(duration);
+      const pct = duration ? (position / duration) * 100 : 0;
+      $('playerFill').style.transform = `scaleX(${pct / 100})`;
+      $('playerBar').setAttribute('aria-valuenow', Math.round(pct));
+    };
+
+    const loadApi = () => {
+      if (apiRequested) return;
+      apiRequested = true;
+      window.onSpotifyIframeApiReady = (IFrameAPI) => {
+        IFrameAPI.createController($('spotifyEmbed'), {
+          uri: `spotify:track:${PLAYLIST[current].id}`,
+          width: '100%',
+          height: 80
+        }, (c) => {
+          controller = c;
+          c.addListener('ready', () => {
+            if (playWhenReady) { playWhenReady = false; c.play(); }
+          });
+          c.addListener('playback_update', (e) => {
+            const d = e.data;
+            isPaused = d.isPaused;
+            duration = d.duration;
+            position = d.position;
+            if (!isPaused && position > 0) wasPlaying = true;
+            // Al terminar una canción pasa a la siguiente
+            if (wasPlaying && isPaused && duration && position >= duration - 800) {
+              wasPlaying = false;
+              select((current + 1) % PLAYLIST.length, true);
+              return;
+            }
+            paintState();
+          });
+        });
+      };
+      const sc = document.createElement('script');
+      sc.src = 'https://open.spotify.com/embed/iframe-api/v1';
+      sc.async = true;
+      document.body.appendChild(sc);
+    };
+
+    const select = (i, autoplay) => {
+      current = (i + PLAYLIST.length) % PLAYLIST.length;
+      position = 0; duration = 0; wasPlaying = false;
+      paint();
+      if (!controller) { playWhenReady = autoplay; loadApi(); return; }
+      playWhenReady = autoplay;
+      controller.loadUri(`spotify:track:${PLAYLIST[current].id}`);
+    };
+
+    $('playerPlay').addEventListener('click', () => {
+      if (!controller) { playWhenReady = true; loadApi(); return; }
+      controller.togglePlay();
+    });
+    $('playerPrev').addEventListener('click', () => {
+      if (controller && position > 3000) controller.seek(0);
+      else select(current - 1, true);
+    });
+    $('playerNext').addEventListener('click', () => select(current + 1, true));
+
+    const seekTo = (ratio) => {
+      if (!controller || !duration) return;
+      controller.seek((Math.min(Math.max(ratio, 0), 1) * duration) / 1000);
+    };
+    $('playerBar').addEventListener('click', (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      seekTo((e.clientX - r.left) / r.width);
+    });
+    $('playerBar').addEventListener('keydown', (e) => {
+      if (!duration) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); seekTo((position + 5000) / duration); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); seekTo((position - 5000) / duration); }
+    });
+
+    // El reproductor de Spotify se carga al abrir la ventana por primera vez
+    document.querySelector('[data-open="musicOverlay"]')?.addEventListener('click', loadApi);
+    paint();
   }
 
   // Estado real de Discord + Spotify con Lanyard
