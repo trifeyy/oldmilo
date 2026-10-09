@@ -1397,6 +1397,59 @@ a.discord-widget:hover {
   margin: 0;
 }
 
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.music-row {
+  position: relative;
+  min-width: 0;
+}
+
+.music-row .music-btn {
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  transition: all 0.25s ease, padding 0.3s ease;
+}
+
+.music-row.has-quick .music-btn { padding-right: 44px; }
+
+.action-btn.music-quick {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background: #ffffff;
+  color: #0b0c10;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%);
+  animation: quick-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.action-btn.music-quick:hover {
+  background: #ffffff;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.music-quick svg { width: 14px; height: 14px; fill: currentColor; }
+.music-quick .icon-play { display: block; }
+.music-quick .icon-pause { display: none; }
+.music-quick.is-playing .icon-play { display: none; }
+.music-quick.is-playing .icon-pause { display: block; }
+.action-btn.music-quick:hover svg { transform: none; }
+
+@keyframes quick-in {
+  from { opacity: 0; transform: translateY(-50%) scale(0.5); }
+}
+
 /* =========================================================
    REPRODUCTOR DE MÚSICA
    ========================================================= */
@@ -1659,6 +1712,111 @@ a.discord-widget:hover {
   color: var(--text-muted);
   text-align: center;
   margin: 10px 0 0;
+}
+
+/* =========================================================
+   PÁGINA 404
+   ========================================================= */
+.error-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 4px 0 18px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 96px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+  letter-spacing: -2px;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+}
+
+.error-code > span[data-text] {
+  position: relative;
+  display: inline-block;
+}
+
+.error-code > span[data-text]::before,
+.error-code > span[data-text]::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.error-code > span[data-text]::before {
+  color: #9aa6c8;
+  animation: glitch-a 3.2s infinite steps(1);
+}
+
+.error-code > span[data-text]::after {
+  color: #6b7183;
+  animation: glitch-b 3.2s infinite steps(1);
+}
+
+@keyframes glitch-a {
+  0%, 88%, 100% { transform: none; clip-path: inset(0 0 0 0); opacity: 0; }
+  90% { transform: translate(-4px, 1px); clip-path: inset(10% 0 55% 0); opacity: 0.7; }
+  93% { transform: translate(3px, -2px); clip-path: inset(60% 0 8% 0); opacity: 0.7; }
+}
+
+@keyframes glitch-b {
+  0%, 89%, 100% { transform: none; clip-path: inset(0 0 0 0); opacity: 0; }
+  91% { transform: translate(4px, 2px); clip-path: inset(35% 0 30% 0); opacity: 0.6; }
+  94% { transform: translate(-3px, -1px); clip-path: inset(5% 0 70% 0); opacity: 0.6; }
+}
+
+/* El "0" es un bloque que gira, como en Minecraft */
+.error-block {
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(190, 196, 210, 0.85));
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.25), inset 0 0 0 6px rgba(8, 9, 12, 0.85), inset 0 0 0 9px rgba(255, 255, 255, 0.4);
+  animation: block-spin 6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes block-spin {
+  0%, 20% { transform: rotate(0deg) translateY(0); }
+  35% { transform: rotate(90deg) translateY(-6px); }
+  50%, 70% { transform: rotate(180deg) translateY(0); }
+  85% { transform: rotate(270deg) translateY(-6px); }
+  100% { transform: rotate(360deg) translateY(0); }
+}
+
+.error-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 8px 0 6px;
+}
+
+.error-path {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  font-size: 11.5px;
+  color: var(--text-main);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 4px 10px;
+  margin: 4px 0 20px;
+}
+
+.error-path:empty { display: none; }
+
+.card .actions .action-btn.primary svg { fill: currentColor; }
+
+@media (max-width: 420px) {
+  .error-code { font-size: 80px; }
+  .error-block { width: 52px; height: 52px; }
 }
 
 /* =========================================================

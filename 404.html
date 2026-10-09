@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobre mí — oldmilo</title>
-  <meta name="description" content="Soy Camilo: nací en Colombia, vivo en España y me apasionan el gaming, la tecnología, el desarrollo web y la creación de contenido.">
+  <title>Página no encontrada — oldmilo</title>
+  <meta name="description" content="Esta página no existe.">
   <meta name="theme-color" content="#08090c">
-  <link rel="canonical" href="https://oldmilo.xyz/aboutme/">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://oldmilo.xyz/404.html">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="oldmilo">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:title" content="Sobre mí — oldmilo">
-  <meta property="og:description" content="Soy Camilo: nací en Colombia, vivo en España y me apasionan el gaming, la tecnología, el desarrollo web y la creación de contenido.">
-  <meta property="og:url" content="https://oldmilo.xyz/aboutme/">
+  <meta property="og:title" content="Página no encontrada — oldmilo">
+  <meta property="og:description" content="Esta página no existe.">
+  <meta property="og:url" content="https://oldmilo.xyz/404.html">
   <meta property="og:image" content="https://oldmilo.xyz/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="oldmilo — Sobre mí">
+  <meta property="og:image:alt" content="oldmilo">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/png" href="/favicon.png">
@@ -51,36 +52,32 @@
     <div class="card-border-wrap wrap-md">
       <div class="card" id="tiltCard">
 
-        <div class="avatar-wrap animate-item">
-          <img class="avatar" src="/foto.jpg" alt="Foto de Camilo" width="84" height="84">
+        <div class="error-code animate-item" aria-hidden="true">
+          <span data-text="4">4</span><span class="error-block"></span><span data-text="4">4</span>
         </div>
 
         <div class="animate-item">
-          <h1 class="greeting">Hola, soy Camilo</h1>
-          <div class="handle">@oldmilo</div>
+          <h1 class="greeting">Te has perdido</h1>
+          <p class="error-text">Esta página no existe o la he movido. Revisa el enlace o vuelve al inicio.</p>
+          <p class="error-path" id="errorPath"></p>
         </div>
 
-        <ul class="sub-pills animate-item">
-          <li class="pill-btn">🎂 <span data-age>21</span> AÑOS</li>
-          <li class="pill-btn">📍 ESPAÑA</li>
-          <li class="pill-btn">🎮 GAMING &amp; TECH</li>
-        </ul>
-
-        <div class="bio-box animate-item">
-          <h2 class="bio-title">✨ Sobre mí</h2>
-          <p class="bio-text">
-            Nací en Colombia y actualmente vivo en España. Apasionado del mundo gaming, la tecnología, el desarrollo web y la creación de contenido digital.
-          </p>
+        <div class="actions animate-item">
+          <a class="action-btn primary" href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> Volver al inicio</a>
+          <div class="actions-grid">
+            <a class="action-btn" href="/milopack/">miloPack</a>
+            <a class="action-btn" href="/setup/">Mi setup</a>
+          </div>
         </div>
 
-        <a class="action-btn animate-item" href="/">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-          Volver al inicio
-        </a>
-
+        <a class="credit animate-item" href="/">oldmilo.xyz</a>
       </div>
     </div>
   </main>
+
+  <script>
+    document.getElementById('errorPath').textContent = location.pathname;
+  </script>
 
   <script src="/script.js?v=5"></script>
 </body>

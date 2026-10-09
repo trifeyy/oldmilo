@@ -202,6 +202,8 @@ const PLAYLIST = [
     let duration = 0;
     let position = 0;
     let wasPlaying = false;
+    let hasStarted = false;
+    const quick = $('musicQuick');
 
     PLAYLIST.forEach((t, i) => {
       const li = document.createElement('li');
@@ -235,6 +237,12 @@ const PLAYLIST = [
       const playing = !isPaused;
       player.classList.toggle('is-playing', playing);
       document.getElementById('musicBtn')?.classList.toggle('is-playing', playing);
+      if (quick) {
+        quick.hidden = !hasStarted;
+        quick.parentElement.classList.toggle('has-quick', hasStarted);
+        quick.classList.toggle('is-playing', playing);
+        quick.setAttribute('aria-label', playing ? 'Pausar música' : 'Reanudar música');
+      }
       $('playerPlay').setAttribute('aria-label', playing ? 'Pausar' : 'Reproducir');
       $('playerPos').textContent = fmt(position);
       $('playerDur').textContent = fmt(duration);
@@ -262,7 +270,10 @@ const PLAYLIST = [
             isPaused = d.isPaused;
             duration = d.duration;
             position = d.position;
-            if (!isPaused && position > 0) wasPlaying = true;
+            if (!isPaused && position > 0 && !wasPlaying) {
+              window.goatcounter?.count?.({ path: 'musica-' + PLAYLIST[current].title, title: 'Música: ' + PLAYLIST[current].title, event: true });
+            }
+            if (!isPaused && position > 0) { wasPlaying = true; hasStarted = true; }
             // Al terminar una canción pasa a la siguiente
             if (wasPlaying && duration && position >= duration - 800) {
               wasPlaying = false;
@@ -297,6 +308,7 @@ const PLAYLIST = [
       else select(current - 1, true);
     });
     $('playerNext').addEventListener('click', () => select(current + 1, true));
+    quick?.addEventListener('click', () => controller && controller.togglePlay());
 
     const seekTo = (ratio) => {
       if (!controller || !duration) return;
