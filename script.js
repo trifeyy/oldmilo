@@ -183,6 +183,89 @@ const PLAYLIST = [
     });
   }
 
+  // Easter egg: escribir "milo" o tocar 5 veces la foto
+  const egg = (() => {
+    let running = false;
+    let found = false;
+    return () => {
+      if (running) return;
+      running = true;
+
+      const card = document.querySelector('.card-border-wrap');
+      if (card && !reduceMotion) {
+        card.classList.remove('egg-jump');
+        void card.offsetWidth;
+        card.classList.add('egg-jump');
+      }
+
+      if (!reduceMotion) {
+        const layer = document.createElement('div');
+        layer.className = 'egg-rain';
+        layer.setAttribute('aria-hidden', 'true');
+        const shades = ['#ffffff', '#e4e5e9', '#b9bdc8', '#8a8f9c', '#5b606d'];
+        const count = innerWidth < 600 ? 28 : 46;
+        for (let i = 0; i < count; i++) {
+          const b = document.createElement(Math.random() < 0.18 ? 'img' : 'span');
+          const size = 14 + Math.random() * 26;
+          if (b.tagName === 'IMG') {
+            b.src = '/milopack/logo.svg';
+            b.alt = '';
+          } else {
+            const c1 = shades[Math.floor(Math.random() * shades.length)];
+            const c2 = shades[Math.floor(Math.random() * shades.length)];
+            b.style.background = `linear-gradient(135deg, ${c1} 0 50%, ${c2} 50% 100%)`;
+          }
+          b.className = 'egg-block';
+          b.style.width = b.style.height = size + 'px';
+          b.style.left = Math.random() * 100 + 'vw';
+          b.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+          b.style.setProperty('--drift', (Math.random() * 120 - 60) + 'px');
+          b.style.animationDuration = 1.8 + Math.random() * 1.6 + 's';
+          b.style.animationDelay = Math.random() * 0.9 + 's';
+          layer.appendChild(b);
+        }
+        document.body.appendChild(layer);
+        setTimeout(() => layer.remove(), 4600);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = 'egg-toast';
+      toast.setAttribute('role', 'status');
+      toast.innerHTML = `<img src="/milopack/logo.svg" alt="" width="40" height="40">
+        <span><strong>¡Logro desbloqueado!</strong><small></small></span>`;
+      toast.querySelector('small').textContent = found
+        ? 'Otra vez por aquí, ¿eh? 👀'
+        : 'Has encontrado el secreto de oldmilo';
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add('is-in'));
+      setTimeout(() => toast.classList.remove('is-in'), 3600);
+      setTimeout(() => { toast.remove(); running = false; }, 4200);
+
+      if (!found) window.goatcounter?.count?.({ path: 'easter-egg', title: 'Easter egg encontrado', event: true });
+      found = true;
+    };
+  })();
+
+  let typed = '';
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+    if (e.target.closest('input, textarea, [contenteditable]')) return;
+    typed = (typed + e.key.toLowerCase()).slice(-4);
+    if (typed === 'milo') { typed = ''; egg(); }
+  });
+
+  const avatarImg = document.querySelector('.avatar');
+  if (avatarImg) {
+    let taps = 0;
+    let tapTimer = null;
+    avatarImg.addEventListener('click', () => {
+      taps++;
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => (taps = 0), 1200);
+      if (taps >= 5) { taps = 0; egg(); }
+    });
+  }
+
   // Aparición de tarjetas al hacer scroll
   const revealItems = document.querySelectorAll('.gear-card, .spec-row');
   if (revealItems.length && 'IntersectionObserver' in window && !reduceMotion) {
