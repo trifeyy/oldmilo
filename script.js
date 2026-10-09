@@ -263,7 +263,7 @@ const PLAYLIST = [
             position = d.position;
             if (!isPaused && position > 0) wasPlaying = true;
             // Al terminar una canción pasa a la siguiente
-            if (wasPlaying && isPaused && duration && position >= duration - 800) {
+            if (wasPlaying && duration && position >= duration - 800) {
               wasPlaying = false;
               select((current + 1) % PLAYLIST.length, true);
               return;
