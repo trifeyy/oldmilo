@@ -258,6 +258,7 @@ const PLAYLIST = [
           });
           c.addListener('playback_update', (e) => {
             const d = e.data;
+            if (d.playingURI && d.playingURI !== `spotify:track:${PLAYLIST[current].id}`) return;
             isPaused = d.isPaused;
             duration = d.duration;
             position = d.position;
