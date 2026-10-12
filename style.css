@@ -2264,6 +2264,120 @@ img.egg-block {
 .avatar { cursor: default; -webkit-tap-highlight-color: transparent; }
 
 /* =========================================================
+   FONDOS DE PANTALLA
+   ========================================================= */
+.walls-intro {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+}
+
+.walls-intro strong { color: var(--text-main); font-weight: 600; }
+
+.wall-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.wall-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--glass-border);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wall-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.45);
+}
+
+.wall-preview {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #07080b;
+}
+
+.wall-pc {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wall-card:hover .wall-pc { transform: scale(1.05); }
+
+.wall-phone {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 19%;
+  height: auto;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wall-card:hover .wall-phone { transform: translateY(-4px) rotate(-4deg); }
+
+.wall-body { padding: 12px 14px 14px; }
+
+.wall-name {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.wall-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+}
+
+.wall-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.wall-btns .dl-btn { flex: 1; }
+
+.dl-btn small {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+.dl-btn.is-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  border: 1px solid var(--glass-border);
+  box-shadow: none;
+}
+
+.dl-btn.is-ghost:hover {
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+@media (max-width: 560px) {
+  .wall-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
    TRANSICIONES ENTRE PÁGINAS
    ========================================================= */
 
@@ -2326,3 +2440,47 @@ img.egg-block {
 }
 
 ul.sub-pills { list-style: none; padding: 0; margin-top: 0; }
+
+/* =========================================================
+   TOQUE ROJO
+   ========================================================= */
+:root {
+  --accent: #ff4a24;
+  --accent-rgb: 255, 74, 36;
+}
+
+.bg {
+  background:
+    radial-gradient(circle at 92% 105%, rgba(var(--accent-rgb), 0.09) 0%, transparent 40%),
+    radial-gradient(circle at 20% 20%, #1a1c24 0%, #08090c 60%);
+}
+
+.spotify-pill.is-playing .spotify-eq-bar,
+.is-playing > .music-eq span,
+.player.is-playing .is-current .music-eq span {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.8);
+}
+
+.spotify-progress span,
+.player-bar span {
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.6);
+}
+
+.section-title::after {
+  background: linear-gradient(to right, rgba(var(--accent-rgb), 0.45), transparent);
+}
+
+.chip:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.timeline > li::before {
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.7);
+}
+
+::selection { background: rgba(var(--accent-rgb), 0.45); color: #ffffff; }
