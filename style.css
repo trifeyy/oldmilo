@@ -1056,7 +1056,7 @@ a.discord-widget:hover {
 }
 
 /* =========================================================
-   MILOPACK — BOTÓN DESCARGA Y LOGO
+   MILOPACK - BOTÓN DESCARGA Y LOGO
    ========================================================= */
 .pack-logo.is-square {
   border-radius: 23%;
@@ -1768,7 +1768,6 @@ a.discord-widget:hover {
   94% { transform: translate(-3px, -1px); clip-path: inset(5% 0 70% 0); opacity: 0.6; }
 }
 
-/* El "0" es un bloque que gira, como en Minecraft */
 .error-block {
   width: 62px;
   height: 62px;
@@ -1915,7 +1914,7 @@ html { scroll-behavior: smooth; }
   background: linear-gradient(to right, rgba(255, 255, 255, 0.18), transparent);
 }
 
-/* Specs del PC */
+/* Specs PC */
 .spec-list {
   list-style: none;
   margin: 0;
@@ -1988,7 +1987,7 @@ html { scroll-behavior: smooth; }
   color: var(--text-muted);
 }
 
-/* Tarjetas de periféricos */
+/* Periféricos */
 .gear-grid {
   list-style: none;
   margin: 0;
@@ -2086,7 +2085,7 @@ html { scroll-behavior: smooth; }
   margin: 4px 0 0;
 }
 
-/* Aparición al hacer scroll */
+/* Scroll */
 .reveal-ready .reveal {
   opacity: 0;
   transform: translateY(14px);

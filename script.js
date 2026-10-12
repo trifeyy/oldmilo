@@ -1,5 +1,3 @@
-// oldmilo.xyz
-
 const CONFIG = {
   discordId: '920277732288516117',
   tiktok: 'user81737491837',
@@ -23,7 +21,7 @@ const PLAYLIST = [
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  // Pantalla de carga
+  // 1. Loader
   const loader = document.getElementById('loader-screen');
   const reveal = () => document.body.classList.add('loaded');
 
@@ -50,7 +48,7 @@ const PLAYLIST = [
     requestAnimationFrame(reveal);
   }
 
-  // Edad calculada automáticamente
+  // 2. Edad
   document.querySelectorAll('[data-age]').forEach((el) => {
     const b = new Date(CONFIG.birthDate + 'T00:00:00');
     const t = new Date();
@@ -59,7 +57,7 @@ const PLAYLIST = [
     el.textContent = age;
   });
 
-  // Enlaces configurables
+  // 3. Links
   const links = {
     discord: CONFIG.discordId ? `https://discord.com/users/${CONFIG.discordId}` : '',
     tiktok: CONFIG.tiktok ? `https://www.tiktok.com/@${CONFIG.tiktok.replace(/^@/, '')}` : ''
@@ -70,7 +68,7 @@ const PLAYLIST = [
     else if (el.dataset.optional !== undefined) el.hidden = true;
   });
 
-  // Partículas e inclinación 3D
+  // 4. Partículas e Inclinación 3D
   if (finePointer && !reduceMotion) {
     let last = 0;
     document.addEventListener('mousemove', (e) => {
@@ -99,7 +97,7 @@ const PLAYLIST = [
     }
   }
 
-  // Modales accesibles
+  // 5. Control de Modales
   const FOCUSABLE = 'a[href]:not([hidden]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
   const main = document.querySelector('main');
   let openOverlay = null;
@@ -145,7 +143,7 @@ const PLAYLIST = [
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  // Botones de copiar
+  // 6. Copiar
   document.querySelectorAll('[data-copy]').forEach((btn) => {
     const label = btn.textContent;
     btn.addEventListener('click', async () => {
@@ -165,7 +163,7 @@ const PLAYLIST = [
     });
   });
 
-  // Transiciones entre páginas
+  // 7. Transiciones
   const nativeVT = 'CSSViewTransitionRule' in window;
   if (!nativeVT && !reduceMotion) {
     document.addEventListener('click', (e) => {
@@ -183,7 +181,7 @@ const PLAYLIST = [
     });
   }
 
-  // Easter egg: escribir "milo" o tocar 5 veces la foto
+  // 8. Easter Egg
   const egg = (() => {
     let running = false;
     let found = false;
@@ -266,7 +264,7 @@ const PLAYLIST = [
     });
   }
 
-  // Aparición de tarjetas al hacer scroll
+  // 9. Animación Scroll
   const revealItems = document.querySelectorAll('.gear-card, .spec-row');
   if (revealItems.length && 'IntersectionObserver' in window && !reduceMotion) {
     document.documentElement.classList.add('reveal-ready');
@@ -286,7 +284,7 @@ const PLAYLIST = [
     });
   }
 
-  // Reproductor de música
+  // 10. Reproductor
   const player = document.getElementById('player');
   if (player) {
     const $ = (id) => document.getElementById(id);
@@ -377,7 +375,6 @@ const PLAYLIST = [
               window.goatcounter?.count?.({ path: 'musica-' + PLAYLIST[current].title, title: 'Música: ' + PLAYLIST[current].title, event: true });
             }
             if (!isPaused && position > 0) { wasPlaying = true; hasStarted = true; }
-            // Al terminar una canción pasa a la siguiente
             if (wasPlaying && duration && position >= duration - 800) {
               wasPlaying = false;
               select((current + 1) % PLAYLIST.length, true);
@@ -427,12 +424,11 @@ const PLAYLIST = [
       if (e.key === 'ArrowLeft') { e.preventDefault(); seekTo((position - 5000) / duration); }
     });
 
-    // El reproductor de Spotify se carga al abrir la ventana por primera vez
     document.querySelector('[data-open="musicOverlay"]')?.addEventListener('click', loadApi);
     paint();
   }
 
-  // Estado real de Discord + Spotify con Lanyard
+  // 11. Discord + Spotify (Lanyard)
   const widget = document.querySelector('[data-lanyard]');
   if (!widget) return;
 
@@ -468,7 +464,6 @@ const PLAYLIST = [
   };
 
   const render = (d) => {
-    // Discord
     const u = d.discord_user || {};
     if (u.avatar) {
       const ext = u.avatar.startsWith('a_') ? 'gif' : 'png';
@@ -486,7 +481,6 @@ const PLAYLIST = [
     dText.textContent = text;
     widget.setAttribute('aria-label', `Discord: ${STATUS[status] || STATUS.offline}. ${text}`);
 
-    // Spotify
     if (!d.listening_to_spotify || !d.spotify) return setSpotifyIdle();
     const s = d.spotify;
     pill.classList.add('is-playing');
