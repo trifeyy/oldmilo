@@ -2349,11 +2349,20 @@ img.egg-block {
 }
 
 .wall-btns {
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
 }
 
-.wall-btns .dl-btn { flex: 1; }
+.wall-btns .dl-btn {
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 4px;
+  line-height: 1.15;
+}
+
+.wall-btns .dl-btn svg { width: 14px; height: 14px; }
+
 
 .dl-btn small {
   font-size: 10px;
