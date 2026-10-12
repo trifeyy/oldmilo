@@ -264,6 +264,8 @@ const PLAYLIST = [
     });
   }
 
+  if (reduceMotion) document.querySelectorAll('video[autoplay]').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+
   // 9. Animación Scroll
   const revealItems = document.querySelectorAll('.gear-card, .spec-row');
   if (revealItems.length && 'IntersectionObserver' in window && !reduceMotion) {

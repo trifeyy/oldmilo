@@ -14,7 +14,7 @@
   <meta property="og:title" content="Mi setup - oldmilo">
   <meta property="og:description" content="Mi PC (Ryzen 7 5700X + RTX 4070 SUPER), monitores, periféricos, audio y todo lo que uso para jugar y crear contenido.">
   <meta property="og:url" content="https://oldmilo.xyz/setup/">
-  <meta property="og:image" content="https://oldmilo.xyz/og.png">
+  <meta property="og:image" content="https://oldmilo.xyz/setup/media/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="oldmilo - Mi setup">
@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=8">
+  <link rel="stylesheet" href="/style.css?v=9">
 </head>
 <body>
 
@@ -59,6 +59,15 @@
             <h1 class="sub-title">Mi setup</h1>
           </div>
         </header>
+
+        <div class="setup-gallery animate-item">
+          <button class="gallery-photo" type="button" data-open="photoOverlay" aria-label="Ver foto del escritorio en grande">
+            <img src="/setup/media/escritorio-arriba.jpg" alt="Mi escritorio con los dos monitores, uno en vertical, el teclado y el ratón" width="1600" height="900" loading="eager">
+          </button>
+          <div class="gallery-video">
+            <video src="/setup/media/escritorio.mp4" poster="/setup/media/escritorio-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de mi setup"></video>
+          </div>
+        </div>
 
         <div class="setup-hero animate-item">
           <span class="hero-stat"><strong>RTX 4070 SUPER</strong><small>Gráfica</small></span>
@@ -295,6 +304,13 @@
     </div>
   </main>
 
-  <script src="/script.js?v=8"></script>
+  <div class="dialog-overlay" id="photoOverlay" aria-hidden="true">
+    <div class="dialog dialog-photo" role="dialog" aria-modal="true" aria-label="Foto del escritorio" tabindex="-1">
+      <button class="dialog-close" type="button" data-close aria-label="Cerrar">×</button>
+      <img src="/setup/media/escritorio-arriba.jpg" alt="Mi escritorio" width="1600" height="900">
+    </div>
+  </div>
+
+  <script src="/script.js?v=9"></script>
 </body>
 </html>
