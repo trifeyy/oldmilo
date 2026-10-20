@@ -148,7 +148,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 22px rgba(255, 255, 255, 0.55), 0 0 48px rgba(255, 74, 36, 0.45);
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.55), 0 0 48px rgba(var(--accent-rgb), 0.45);
   opacity: 0;
   animation: ld-glow 1.1s ease 1.25s forwards;
 }
@@ -2542,3 +2542,124 @@ ul.sub-pills { list-style: none; padding: 0; margin-top: 0; }
 }
 
 @keyframes lt-pulse { 50% { opacity: 0.45; } }
+
+/* Luz del ratón */
+.card-border-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--accent-rgb), 0.9), rgba(255, 255, 255, 0.35) 35%, transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.065), rgba(var(--accent-rgb), 0.035) 45%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-border-wrap.is-lit::before,
+.card-border-wrap.is-lit .card-glow { opacity: 1; }
+
+/* Pie de la tarjeta */
+.card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.card-foot .credit { margin-top: 0; }
+.foot-sep { opacity: 0.6; }
+.foot-visits { display: inline-flex; gap: 8px; font-variant-numeric: tabular-nums; }
+.foot-visits[hidden] { display: none; }
+.foot-visits b { color: rgba(255, 255, 255, 0.7); font-weight: 500; margin-right: -4px; }
+
+.accent-pick { position: relative; display: flex; }
+
+.accent-btn {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.accent-btn span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
+}
+
+.accent-btn:hover,
+.accent-btn[aria-expanded="true"] { border-color: rgba(255, 255, 255, 0.35); transform: scale(1.1); }
+
+.accent-menu {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: -8px;
+  display: flex;
+  gap: 6px;
+  padding: 7px;
+  border-radius: 999px;
+  background: rgba(18, 18, 24, 0.92);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: accent-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.accent-menu[hidden] { display: none; }
+
+.accent-menu button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: rgb(var(--c));
+  background-clip: padding-box;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.accent-menu button:hover { transform: scale(1.15); }
+.accent-menu button[aria-pressed="true"] { border-color: #fff; }
+
+@keyframes accent-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+}
+
+/* Cumpleaños */
+.pill-btn[hidden] { display: none; }
+
+.confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+}

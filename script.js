@@ -90,6 +90,32 @@ const PLAYLIST = [
     el.textContent = age;
   });
 
+  const todayIn = () => {
+    try {
+      const p = new Intl.DateTimeFormat('en-CA', { timeZone: CONFIG.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      const [y, m, d] = p.split('-').map(Number);
+      return { y, m, d };
+    } catch (e) {
+      const t = new Date();
+      return { y: t.getFullYear(), m: t.getMonth() + 1, d: t.getDate() };
+    }
+  };
+  const [, bMonth, bDay] = CONFIG.birthDate.split('-').map(Number);
+  const now = todayIn();
+  const isBirthday = now.m === bMonth && now.d === bDay;
+  const daysLeft = (() => {
+    const t = Date.UTC(now.y, now.m - 1, now.d);
+    let next = Date.UTC(now.y, bMonth - 1, bDay);
+    if (next < t) next = Date.UTC(now.y + 1, bMonth - 1, bDay);
+    return Math.round((next - t) / 86400000);
+  })();
+
+  document.querySelectorAll('[data-birthday]').forEach((el) => {
+    const span = el.querySelector('span') || el;
+    span.textContent = isBirthday ? 'HOY ES MI CUMPLE' : daysLeft === 1 ? 'CUMPLO MAÑANA' : `CUMPLO EN ${daysLeft} DÍAS`;
+    el.hidden = false;
+  });
+
   // 3. Links
   const links = {
     discord: CONFIG.discordId ? `https://discord.com/users/${CONFIG.discordId}` : '',
@@ -114,6 +140,30 @@ const PLAYLIST = [
       s.style.top = e.clientY + (Math.random() * 10 - 5) + 'px';
       document.body.appendChild(s);
       setTimeout(() => s.remove(), 800);
+    });
+
+    document.querySelectorAll('.card-border-wrap').forEach((wrap) => {
+      const inner = wrap.firstElementChild;
+      if (inner && !inner.querySelector('.card-glow')) {
+        const g = document.createElement('div');
+        g.className = 'card-glow';
+        g.setAttribute('aria-hidden', 'true');
+        inner.prepend(g);
+      }
+      let raf = 0, mx = 0, my = 0;
+      wrap.addEventListener('pointermove', (e) => {
+        const r = wrap.getBoundingClientRect();
+        mx = e.clientX - r.left;
+        my = e.clientY - r.top;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          wrap.style.setProperty('--mx', mx + 'px');
+          wrap.style.setProperty('--my', my + 'px');
+        });
+      });
+      wrap.addEventListener('pointerenter', () => wrap.classList.add('is-lit'));
+      wrap.addEventListener('pointerleave', () => wrap.classList.remove('is-lit'));
     });
 
     const card = document.getElementById('tiltCard');
@@ -500,7 +550,8 @@ const PLAYLIST = [
     const night = h >= 1 && h < 8;
     let text, mood;
 
-    if (game) { text = `jugando a ${game.name}`; mood = 'play'; }
+    if (isBirthday) { text = 'hoy es mi cumpleaños'; mood = 'play'; }
+    else if (game) { text = `jugando a ${game.name}`; mood = 'play'; }
     else if (status === 'dnd') { text = 'ocupado'; mood = 'busy'; }
     else if (night) { text = awake ? 'despierto a estas horas' : 'probablemente durmiendo'; mood = awake ? 'online' : 'sleep'; }
     else {
@@ -520,7 +571,104 @@ const PLAYLIST = [
   setInterval(paintTime, 15000);
   document.addEventListener('om:presence', (e) => { presence = e.detail; paintTime(); });
 
-  // 13. Discord + Spotify (Lanyard)
+  // 13. Visitas
+  const visitBox = document.getElementById('visitCount');
+  if (visitBox) {
+    fetch('https://oldmilo.goatcounter.com/counter/TOTAL.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!d || !d.count) return;
+        document.getElementById('visitNum').textContent = String(d.count).replace(/[,\s\u202f]/g, '.');
+        visitBox.hidden = false;
+      })
+      .catch(() => { });
+  }
+
+  // 14. Color
+  const ACCENTS = [
+    { name: 'Rojo', rgb: '255, 74, 36' },
+    { name: 'Azul', rgb: '76, 141, 255' },
+    { name: 'Verde', rgb: '52, 211, 153' },
+    { name: 'Morado', rgb: '167, 139, 250' },
+    { name: 'Rosa', rgb: '255, 92, 154' },
+    { name: 'Amarillo', rgb: '251, 191, 36' }
+  ];
+  const accentBtn = document.getElementById('accentBtn');
+  const accentMenu = document.getElementById('accentMenu');
+
+  const setAccent = (rgb, save) => {
+    root.style.setProperty('--accent', `rgb(${rgb})`);
+    root.style.setProperty('--accent-rgb', rgb);
+    if (save) { try { localStorage.setItem('om-accent', rgb); } catch (e) { } }
+    if (accentMenu) accentMenu.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.rgb === rgb));
+  };
+
+  if (accentBtn && accentMenu) {
+    let saved = ACCENTS[0].rgb;
+    try { saved = localStorage.getItem('om-accent') || saved; } catch (e) { }
+    accentMenu.innerHTML = ACCENTS.map((a) => `<button type="button" data-rgb="${a.rgb}" style="--c:${a.rgb}" aria-label="${a.name}" title="${a.name}" aria-pressed="${a.rgb === saved}"></button>`).join('');
+
+    const toggle = (open) => {
+      accentMenu.hidden = !open;
+      accentBtn.setAttribute('aria-expanded', open);
+    };
+    accentBtn.addEventListener('click', (e) => { e.stopPropagation(); toggle(accentMenu.hidden); });
+    accentMenu.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      setAccent(b.dataset.rgb, true);
+      window.goatcounter?.count?.({ path: 'color-' + b.title.toLowerCase(), title: 'Color: ' + b.title, event: true });
+    });
+    document.addEventListener('click', (e) => { if (!accentMenu.hidden && !e.target.closest('.accent-pick')) toggle(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !accentMenu.hidden) { toggle(false); accentBtn.focus(); } });
+  }
+
+  // 15. Confeti de cumpleaños
+  if (isBirthday && document.getElementById('tiltCard') && !reduceMotion) {
+    let seen = false;
+    try { seen = sessionStorage.getItem('om-cumple'); sessionStorage.setItem('om-cumple', '1'); } catch (e) { }
+    if (!seen) {
+      const go = () => {
+        const cv = document.createElement('canvas');
+        cv.className = 'confetti';
+        document.body.appendChild(cv);
+        const ctx = cv.getContext('2d');
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        cv.width = innerWidth * dpr;
+        cv.height = innerHeight * dpr;
+        ctx.scale(dpr, dpr);
+        const acc = getComputedStyle(root).getPropertyValue('--accent-rgb').trim() || '255, 74, 36';
+        const cols = [`rgb(${acc})`, '#ffffff', '#9ca3af'];
+        const bits = Array.from({ length: 140 }, () => ({
+          x: innerWidth / 2 + (Math.random() - 0.5) * 120,
+          y: innerHeight * 0.45,
+          vx: (Math.random() - 0.5) * 14,
+          vy: -Math.random() * 14 - 4,
+          r: Math.random() * Math.PI,
+          vr: (Math.random() - 0.5) * 0.3,
+          w: 5 + Math.random() * 5,
+          c: cols[Math.floor(Math.random() * cols.length)]
+        }));
+        const t0 = performance.now();
+        const tick = (now) => {
+          const t = (now - t0) / 1000;
+          ctx.clearRect(0, 0, innerWidth, innerHeight);
+          ctx.globalAlpha = Math.max(0, 1 - Math.max(0, t - 2.2) / 0.8);
+          bits.forEach((b) => {
+            b.vy += 0.35; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
+            ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r);
+            ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.w / 4, b.w, b.w / 2);
+            ctx.restore();
+          });
+          if (t < 3) requestAnimationFrame(tick); else cv.remove();
+        };
+        requestAnimationFrame(tick);
+      };
+      setTimeout(go, root.classList.contains('no-loader') ? 500 : 4200);
+    }
+  }
+
+  // 16. Discord + Spotify (Lanyard)
   const widget = document.querySelector('[data-lanyard]');
   if (!widget) return;
 

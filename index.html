@@ -29,6 +29,13 @@
       if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
         document.documentElement.classList.add('no-loader');
     } catch (e) { document.documentElement.classList.add('no-loader'); }
+    try {
+      const c = localStorage.getItem('om-accent');
+      if (c && /^\d{1,3}, \d{1,3}, \d{1,3}$/.test(c)) {
+        document.documentElement.style.setProperty('--accent', `rgb(${c})`);
+        document.documentElement.style.setProperty('--accent-rgb', c);
+      }
+    } catch (e) { }
   </script>
 
   <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -36,7 +43,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=14">
+  <link rel="stylesheet" href="/style.css?v=15">
 </head>
 <body>
 
@@ -49,7 +56,7 @@
         <defs>
           <linearGradient id="ldGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
-            <stop offset="1" stop-color="#ff4a24" stop-opacity=".8"/>
+            <stop offset="1" style="stop-color:var(--accent)" stop-opacity=".8"/>
           </linearGradient>
         </defs>
         <rect class="ld-frame" x="21.5" y="21.5" width="57" height="57" rx="15" pathLength="240"/>
@@ -72,6 +79,7 @@
   <main class="stage">
     <div class="card-border-wrap">
       <div class="card" id="tiltCard">
+        <div class="card-glow" aria-hidden="true"></div>
 
         <button class="card-share" type="button" data-open="shareOverlay" data-goatcounter-click="abrir-compartir" aria-label="Compartir mi página">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
@@ -153,7 +161,15 @@
           </span>
         </a>
 
-        <a class="credit animate-item" data-goatcounter-click="clic-made-by" href="https://www.youtube.com/@oldmiilo" target="_blank" rel="noopener">made by milo</a>
+        <div class="card-foot animate-item">
+          <a class="credit" data-goatcounter-click="clic-made-by" href="https://www.youtube.com/@oldmiilo" target="_blank" rel="noopener">made by milo</a>
+          <span class="foot-visits" id="visitCount" hidden><span class="foot-sep" aria-hidden="true">·</span><b id="visitNum"></b> visitas</span>
+          <span class="foot-sep" aria-hidden="true">·</span>
+          <div class="accent-pick">
+            <button class="accent-btn" type="button" id="accentBtn" aria-label="Cambiar el color de la página" aria-expanded="false" aria-controls="accentMenu"><span></span></button>
+            <div class="accent-menu" id="accentMenu" role="group" aria-label="Colores" hidden></div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -244,6 +260,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=14"></script>
+  <script src="/script.js?v=15"></script>
 </body>
 </html>
