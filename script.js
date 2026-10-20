@@ -30,31 +30,51 @@ const PLAYLIST = [
   if (loader && !root.classList.contains('no-loader')) {
     const percent = document.getElementById('loaderPercent');
     const win = loader.querySelector('.ld-win');
-    const duration = 2200;
-    const start = performance.now();
     const later = (ms) => new Promise((r) => setTimeout(r, ms));
+    const frame = () => new Promise((r) => requestAnimationFrame(r));
+
+    const zoom = () => {
+      const size = win.offsetWidth || 86;
+      const end = (2.4 * Math.hypot(innerWidth, innerHeight)) / size;
+      const keys = [];
+      for (let i = 0; i <= 16; i++) {
+        const t = i / 16;
+        const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        keys.push({ transform: `translateZ(0) scale(${Math.pow(end, e)})` });
+      }
+      return win.animate(keys, { duration: 1100, easing: 'linear', fill: 'forwards' }).finished;
+    };
 
     const open = async () => {
       loader.classList.add('is-open');
       await later(220);
       loader.classList.add('is-clear');
+      await later(260);
+      await frame();
       reveal();
-      await later(300);
-      const size = win.offsetWidth || 150;
-      win.style.transform = `scale(${(2.6 * Math.max(innerWidth, innerHeight)) / size})`;
       loader.setAttribute('aria-hidden', 'true');
-      await later(1200);
+      await zoom().catch(() => { });
       loader.remove();
     };
 
-    const step = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-      if (percent) percent.textContent = Math.floor(eased * 100);
-      if (p < 1) return requestAnimationFrame(step);
-      setTimeout(open, 180);
+    const run = () => {
+      loader.classList.add('is-go');
+      const duration = 2200;
+      const start = performance.now();
+      let last = -1;
+      const step = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+        const n = Math.floor(eased * 100);
+        if (n !== last && percent) { percent.textContent = n; last = n; }
+        if (p < 1) return requestAnimationFrame(step);
+        setTimeout(open, 180);
+      };
+      requestAnimationFrame(step);
     };
-    requestAnimationFrame(step);
+
+    const fonts = document.fonts ? document.fonts.load('700 40px "Clash Display"') : Promise.resolve();
+    Promise.race([fonts, later(600)]).catch(() => { }).then(() => requestAnimationFrame(run));
   } else {
     if (loader) loader.remove();
     requestAnimationFrame(reveal);
