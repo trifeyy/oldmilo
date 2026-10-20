@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahora - oldmilo</title>
+  <meta name="description" content="Lo que estoy haciendo ahora mismo: a qué juego, qué escucho, en qué trabajo y mis objetivos.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/ahora/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Ahora - oldmilo">
+  <meta property="og:description" content="Lo que estoy haciendo ahora mismo: a qué juego, qué escucho, en qué trabajo y mis objetivos.">
+  <meta property="og:url" content="https://oldmilo.xyz/ahora/">
+  <meta property="og:image" content="https://oldmilo.xyz/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="oldmilo - Ahora">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+    try {
+      const c = localStorage.getItem('om-accent');
+      if (c && /^\d{1,3}, \d{1,3}, \d{1,3}$/.test(c)) {
+        document.documentElement.style.setProperty('--accent', `rgb(${c})`);
+        document.documentElement.style.setProperty('--accent-rgb', c);
+      }
+    } catch (e) { }
+  </script>
+
+  <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css?v=16">
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-md">
+      <div class="card" id="tiltCard">
+
+        <div class="animate-item">
+          <h1 class="greeting">Ahora</h1>
+          <div class="handle">Lo que estoy haciendo este mes</div>
+        </div>
+
+        <ul class="now-list animate-item">
+          <li>
+            <span class="now-ic" aria-hidden="true">🎮</span>
+            <span class="now-k">Jugando</span>
+            <span class="now-v">Minecraft y Warzone</span>
+            <span class="now-sub">Y de vez en cuando LFS, Skate, Fortnite y GTA V</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🎧</span>
+            <span class="now-k">En bucle</span>
+            <span class="now-v">Mala Conducta</span>
+            <span class="now-sub">Fuera del Planeta, No Me Quiero Ver, Soy una Gárgola. Últimamente mucho Bad Bunny y Eladio Carrión</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🛠️</span>
+            <span class="now-k">Trabajando en</span>
+            <span class="now-v">Esta web y en mí mismo</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🎯</span>
+            <span class="now-k">Objetivo</span>
+            <span class="now-v">Gimnasio, trabajo y hacer más dinero</span>
+            <span class="now-sub">Unos 8 meses ya en el gym, sin fallar</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🛒</span>
+            <span class="now-k">Último capricho</span>
+            <span class="now-v">La tercera pantalla</span>
+            <span class="now-sub">Otra Samsung de 240 Hz, igual que las otras dos. <a href="/setup/#pantallas">Ver mi setup</a></span>
+          </li>
+        </ul>
+
+        <p class="now-date animate-item">Actualizado en octubre de 2026</p>
+
+        <a class="action-btn animate-item" href="/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Volver al inicio
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js?v=16"></script>
+</body>
+</html>

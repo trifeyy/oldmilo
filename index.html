@@ -43,7 +43,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=15">
+  <link rel="stylesheet" href="/style.css?v=16">
 </head>
 <body>
 
@@ -99,12 +99,13 @@
         </div>
 
         <!-- Hora y estado -->
-        <p class="local-time animate-item" id="localTime" title="Mi hora local">
+        <a class="local-time animate-item" id="localTime" href="/ahora/" title="Qué estoy haciendo ahora">
           <span class="lt-dot" id="ltDot" data-mood="day"></span>
           <span class="lt-clock" id="ltClock">--:--</span>
           <span class="lt-sep" aria-hidden="true">·</span>
           <span id="ltText">por aquí</span>
-        </p>
+          <svg class="lt-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </a>
 
         <!-- Spotify -->
         <a class="spotify-pill animate-item" data-goatcounter-click="clic-spotify-estado" id="spotifyPill" href="https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky" target="_blank" rel="noopener" aria-label="Mi perfil de Spotify">
@@ -260,6 +261,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=15"></script>
+  <script src="/script.js?v=16"></script>
 </body>
 </html>
