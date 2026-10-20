@@ -43,7 +43,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=16">
+  <link rel="stylesheet" href="/style.css?v=17">
 </head>
 <body>
 
@@ -80,6 +80,13 @@
     <div class="card-border-wrap">
       <div class="card" id="tiltCard">
         <div class="card-glow" aria-hidden="true"></div>
+
+        <!-- Parte de atrás -->
+        <div class="card-back" id="cardBack" aria-hidden="true">
+          <img class="card-back-qr" src="/qr.svg" alt="Código QR de oldmilo.xyz" width="180" height="180">
+          <strong>oldmilo.xyz</strong>
+          <small>Escanéame. Toca para volver.</small>
+        </div>
 
         <button class="card-share" type="button" data-open="shareOverlay" data-goatcounter-click="abrir-compartir" aria-label="Compartir mi página">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
@@ -160,6 +167,7 @@
             <span class="discord-user" id="discordUser">@plaices</span>
             <span class="discord-status-text" id="discordStatus">Discord</span>
           </span>
+          <img class="discord-game" id="discordGame" alt="" width="30" height="30" hidden>
         </a>
 
         <div class="card-foot animate-item">
@@ -261,6 +269,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=16"></script>
+  <script src="/script.js?v=17"></script>
 </body>
 </html>

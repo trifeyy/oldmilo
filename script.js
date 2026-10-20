@@ -166,6 +166,38 @@ const PLAYLIST = [
       wrap.addEventListener('pointerleave', () => wrap.classList.remove('is-lit'));
     });
 
+    document.querySelectorAll('.action-btn, .icon-btn').forEach((btn) => {
+      btn.addEventListener('pointermove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        btn.style.translate = `${x * 4}px ${y * 3}px`;
+      });
+      btn.addEventListener('pointerleave', () => { btn.style.translate = ''; });
+    });
+
+    const name = document.querySelector('.username');
+    if (name) {
+      const word = name.textContent.trim();
+      const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/<>';
+      let busy = false;
+      name.setAttribute('aria-label', word);
+      name.addEventListener('pointerenter', () => {
+        if (busy) return;
+        busy = true;
+        const t0 = performance.now();
+        const step = (now) => {
+          const p = Math.min((now - t0) / 520, 1);
+          const k = Math.floor(p * word.length);
+          name.textContent = word.split('').map((c, i) => (i < k ? c : CH[Math.floor(Math.random() * CH.length)].toLowerCase())).join('');
+          if (p < 1) return requestAnimationFrame(step);
+          name.textContent = word;
+          setTimeout(() => (busy = false), 300);
+        };
+        requestAnimationFrame(step);
+      });
+    }
+
     const card = document.getElementById('tiltCard');
     if (card) {
       const max = Number(card.dataset.tilt || 5);
@@ -178,6 +210,22 @@ const PLAYLIST = [
         card.style.transform = '';
       });
     }
+  }
+
+  if (!reduceMotion) {
+    document.addEventListener('pointerdown', (e) => {
+      const btn = e.target.closest('.action-btn, .icon-btn');
+      if (!btn) return;
+      const r = btn.getBoundingClientRect();
+      const size = Math.max(r.width, r.height) * 2.2;
+      const w = document.createElement('span');
+      w.className = 'ripple';
+      w.style.width = w.style.height = size + 'px';
+      w.style.left = e.clientX - r.left - size / 2 + 'px';
+      w.style.top = e.clientY - r.top - size / 2 + 'px';
+      btn.appendChild(w);
+      setTimeout(() => w.remove(), 650);
+    });
   }
 
   // 5. Control de Modales
@@ -422,6 +470,7 @@ const PLAYLIST = [
     const paintState = () => {
       const playing = !isPaused;
       player.classList.toggle('is-playing', playing);
+      document.dispatchEvent(new CustomEvent('om:song', { detail: { from: 'player', url: playing ? coverUrl(PLAYLIST[current].cover) : null } }));
       document.getElementById('musicBtn')?.classList.toggle('is-playing', playing);
       if (quick) {
         quick.hidden = !hasStarted;
@@ -571,7 +620,96 @@ const PLAYLIST = [
   setInterval(paintTime, 15000);
   document.addEventListener('om:presence', (e) => { presence = e.detail; paintTime(); });
 
-  // 13. Visitas
+  // 13. Anillo de estado
+  const ring = document.querySelector('.avatar-wrap');
+  if (ring && document.querySelector('[data-lanyard]')) {
+    document.addEventListener('om:presence', (e) => {
+      const d = e.detail || {};
+      const playing = (d.activities || []).some((a) => a.type === 0);
+      ring.dataset.ring = playing ? 'play' : d.discord_status || 'offline';
+    });
+  }
+
+  // 14. Color de la canción
+  const songs = { player: null, lanyard: null };
+  let songUrl = null;
+  const tint = (url) => {
+    if (url === songUrl) return;
+    songUrl = url;
+    if (!url) { root.classList.remove('has-song'); return; }
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      if (songUrl !== url) return;
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = 24;
+        const ctx = c.getContext('2d', { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, 24, 24);
+        const px = ctx.getImageData(0, 0, 24, 24).data;
+        let r = 0, g = 0, b = 0, w = 0;
+        for (let i = 0; i < px.length; i += 4) {
+          const max = Math.max(px[i], px[i + 1], px[i + 2]);
+          const min = Math.min(px[i], px[i + 1], px[i + 2]);
+          const k = (max - min) / 255 + 0.05;
+          r += px[i] * k; g += px[i + 1] * k; b += px[i + 2] * k; w += k;
+        }
+        r /= w; g /= w; b /= w;
+        const m = Math.max(r, g, b, 1);
+        const lift = Math.min(220 / m, 2.2);
+        root.style.setProperty('--song', `rgb(${Math.round(r * lift)}, ${Math.round(g * lift)}, ${Math.round(b * lift)})`);
+        root.classList.add('has-song');
+      } catch (e) { root.classList.remove('has-song'); }
+    };
+    img.onerror = () => root.classList.remove('has-song');
+    img.src = url;
+  };
+  document.addEventListener('om:song', (e) => {
+    songs[e.detail.from] = e.detail.url;
+    tint(songs.player || songs.lanyard);
+  });
+
+  // 15. Tarjeta reversible
+  const flipCard = document.getElementById('tiltCard');
+  const flipWrap = flipCard && flipCard.closest('.card-border-wrap');
+  const back = document.getElementById('cardBack');
+  if (flipWrap && back) {
+    let flipping = false;
+    const flip = async () => {
+      if (flipping) return;
+      flipping = true;
+      const toBack = !flipCard.classList.contains('is-back');
+      if (!reduceMotion && flipWrap.animate) {
+        await flipWrap.animate([{ transform: 'perspective(1200px) rotateY(0deg)' }, { transform: 'perspective(1200px) rotateY(90deg)' }], { duration: 230, easing: 'cubic-bezier(0.55, 0, 1, 0.45)' }).finished;
+      }
+      flipCard.classList.toggle('is-back', toBack);
+      back.setAttribute('aria-hidden', !toBack);
+      if (!reduceMotion && flipWrap.animate) {
+        await flipWrap.animate([{ transform: 'perspective(1200px) rotateY(-90deg)' }, { transform: 'perspective(1200px) rotateY(0deg)' }], { duration: 320, easing: 'cubic-bezier(0, 0.55, 0.45, 1)' }).finished;
+      }
+      if (toBack) window.goatcounter?.count?.({ path: 'tarjeta-girada', title: 'Tarjeta girada', event: true });
+      flipping = false;
+    };
+
+    const blocked = (t) => t.closest('a, button, img, input, .accent-menu');
+    let hold = null;
+    let held = false;
+    flipCard.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse' || blocked(e.target)) return;
+      hold = setTimeout(() => { hold = null; held = true; navigator.vibrate?.(12); flip(); }, 550);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => flipCard.addEventListener(ev, () => { clearTimeout(hold); hold = null; }));
+    flipCard.addEventListener('contextmenu', (e) => { if (!blocked(e.target)) e.preventDefault(); });
+    flipCard.addEventListener('mousedown', (e) => { if (e.detail > 1 && !blocked(e.target)) e.preventDefault(); });
+    flipCard.addEventListener('dblclick', (e) => { if (!blocked(e.target) && !e.target.closest('.card-back')) flip(); });
+    back.addEventListener('click', () => {
+      if (held) { held = false; return; }
+      if (flipCard.classList.contains('is-back')) flip();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && flipCard.classList.contains('is-back')) flip(); });
+  }
+
+  // 16. Visitas
   const visitBox = document.getElementById('visitCount');
   if (visitBox) {
     fetch('https://oldmilo.goatcounter.com/counter/TOTAL.json')
@@ -584,7 +722,7 @@ const PLAYLIST = [
       .catch(() => { });
   }
 
-  // 14. Color
+  // 17. Color
   const ACCENTS = [
     { name: 'Rojo', rgb: '255, 74, 36' },
     { name: 'Azul', rgb: '76, 141, 255' },
@@ -623,7 +761,7 @@ const PLAYLIST = [
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !accentMenu.hidden) { toggle(false); accentBtn.focus(); } });
   }
 
-  // 15. Confeti de cumpleaños
+  // 18. Confeti de cumpleaños
   if (isBirthday && document.getElementById('tiltCard') && !reduceMotion) {
     let seen = false;
     try { seen = sessionStorage.getItem('om-cumple'); sessionStorage.setItem('om-cumple', '1'); } catch (e) { }
@@ -668,7 +806,7 @@ const PLAYLIST = [
     }
   }
 
-  // 16. Discord + Spotify (Lanyard)
+  // 19. Discord + Spotify (Lanyard)
   const widget = document.querySelector('[data-lanyard]');
   if (!widget) return;
 
@@ -692,7 +830,28 @@ const PLAYLIST = [
 
   let progressTimer = null;
 
+  const gameIcon = document.getElementById('discordGame');
+  const paintGame = (game) => {
+    if (!gameIcon) return;
+    let src = '';
+    if (game) {
+      const big = (game.assets || {}).large_image || '';
+      if (big.startsWith('mp:')) src = `https://media.discordapp.net/${big.slice(3)}`;
+      else if (big && game.application_id) src = `https://cdn.discordapp.com/app-assets/${game.application_id}/${big}.png`;
+      else if (game.application_id) src = `https://dcdn.dstn.to/app-icons/${game.application_id}`;
+    }
+    if (!src) { gameIcon.hidden = true; gameIcon.removeAttribute('src'); return; }
+    if (gameIcon.getAttribute('src') !== src) {
+      gameIcon.onload = () => { gameIcon.hidden = false; };
+      gameIcon.onerror = () => { gameIcon.hidden = true; };
+      gameIcon.src = src;
+    }
+    gameIcon.alt = game.name;
+    gameIcon.title = game.name;
+  };
+
   const setSpotifyIdle = () => {
+    document.dispatchEvent(new CustomEvent('om:song', { detail: { from: 'lanyard', url: null } }));
     clearInterval(progressTimer);
     pill.classList.remove('is-playing');
     pill.href = CONFIG.spotifyProfile;
@@ -720,11 +879,13 @@ const PLAYLIST = [
     if (game) text = `Jugando a ${game.name}`;
     else if (custom) text = (custom.emoji && !custom.emoji.id ? custom.emoji.name + ' ' : '') + custom.state;
     dText.textContent = text;
+    paintGame(game);
     widget.setAttribute('aria-label', `Discord: ${STATUS[status] || STATUS.offline}. ${text}`);
 
     if (!d.listening_to_spotify || !d.spotify) return setSpotifyIdle();
     const s = d.spotify;
     pill.classList.add('is-playing');
+    document.dispatchEvent(new CustomEvent('om:song', { detail: { from: 'lanyard', url: s.album_art_url } }));
     pill.href = `https://open.spotify.com/track/${s.track_id}`;
     cover.src = s.album_art_url || defaultCover;
     label.textContent = 'Escuchando';
