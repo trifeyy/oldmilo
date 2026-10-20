@@ -29,18 +29,30 @@ const PLAYLIST = [
 
   if (loader && !root.classList.contains('no-loader')) {
     const percent = document.getElementById('loaderPercent');
-    const duration = 1200;
+    const win = loader.querySelector('.ld-win');
+    const duration = 2200;
     const start = performance.now();
+    const later = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    const open = async () => {
+      loader.classList.add('is-open');
+      await later(220);
+      loader.classList.add('is-clear');
+      reveal();
+      await later(300);
+      const size = win.offsetWidth || 150;
+      win.style.transform = `scale(${(2.6 * Math.max(innerWidth, innerHeight)) / size})`;
+      loader.setAttribute('aria-hidden', 'true');
+      await later(1200);
+      loader.remove();
+    };
+
     const step = (now) => {
       const p = Math.min((now - start) / duration, 1);
-      const eased = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const eased = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
       if (percent) percent.textContent = Math.floor(eased * 100);
       if (p < 1) return requestAnimationFrame(step);
-      setTimeout(() => {
-        loader.classList.add('hidden');
-        loader.setAttribute('aria-hidden', 'true');
-        reveal();
-      }, 200);
+      setTimeout(open, 180);
     };
     requestAnimationFrame(step);
   } else {

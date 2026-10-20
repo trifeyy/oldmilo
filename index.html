@@ -36,26 +36,28 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=11">
+  <link rel="stylesheet" href="/style.css?v=12">
 </head>
 <body>
 
   <!-- PANTALLA DE CARGA -->
   <div id="loader-screen" role="status" aria-label="Cargando">
-    <div class="loader-viewport" aria-hidden="true">
-      <div class="holo-ring-container">
-        <div class="holo-ring ring-outer"></div>
-        <div class="holo-ring ring-inner"></div>
-        <div class="holo-pulse"></div>
-        <div class="loader-center-data">
-          <span class="loader-percent" id="loaderPercent">0</span>
-          <span class="percent-symbol">%</span>
-        </div>
-      </div>
-      <div class="loader-brand-status">
-        <span class="loader-text">OLDMILO // SYSTEM</span>
-        <div class="status-dots"><span></span><span></span><span></span></div>
-      </div>
+    <div class="ld-win" aria-hidden="true">
+      <div class="ld-fill"></div>
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="ldGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#ff4a24" stop-opacity=".8"/>
+          </linearGradient>
+        </defs>
+        <rect class="ld-frame" x="21.5" y="21.5" width="57" height="57" rx="15" pathLength="240"/>
+        <path class="ld-m" d="M36.5 61V42.5c0-3.4 4-4.6 5.9-1.8L50 52l7.6-11.3c1.9-2.8 5.9-1.6 5.9 1.8V61" pathLength="90"/>
+      </svg>
+    </div>
+    <div class="ld-title" aria-hidden="true">
+      <span class="ld-name">oldmilo</span>
+      <span class="ld-sub">CARGANDO <b id="loaderPercent">0</b>%</span>
     </div>
   </div>
 
@@ -213,6 +215,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=11"></script>
+  <script src="/script.js?v=12"></script>
 </body>
 </html>
