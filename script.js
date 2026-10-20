@@ -2,7 +2,8 @@ const CONFIG = {
   discordId: '920277732288516117',
   tiktok: 'user81737491837',
   spotifyProfile: 'https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky',
-  birthDate: '2004-12-12'
+  birthDate: '2004-12-12',
+  timeZone: 'Europe/Madrid'
 };
 
 const PLAYLIST = [
@@ -462,7 +463,64 @@ const PLAYLIST = [
     paint();
   }
 
-  // 11. Discord + Spotify (Lanyard)
+  // 11. Compartir
+  const shareNative = document.getElementById('shareNative');
+  if (shareNative && navigator.share) {
+    shareNative.hidden = false;
+    shareNative.addEventListener('click', () => {
+      navigator.share({ title: 'oldmilo', text: 'Mira la página de oldmilo', url: 'https://oldmilo.xyz' }).catch(() => { });
+    });
+  }
+
+  // 12. Hora y estado
+  const lt = {
+    clock: document.getElementById('ltClock'),
+    text: document.getElementById('ltText'),
+    dot: document.getElementById('ltDot')
+  };
+  let presence = null;
+
+  const hourNow = () => {
+    try {
+      const parts = new Intl.DateTimeFormat('es-ES', { timeZone: CONFIG.timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+      const get = (t) => (parts.find((p) => p.type === t) || {}).value || '00';
+      return { h: +get('hour'), label: `${get('hour')}:${get('minute')}` };
+    } catch (e) {
+      const d = new Date();
+      return { h: d.getHours(), label: d.toTimeString().slice(0, 5) };
+    }
+  };
+
+  const paintTime = () => {
+    if (!lt.clock) return;
+    const { h, label } = hourNow();
+    const status = presence ? presence.discord_status : 'offline';
+    const game = presence && (presence.activities || []).find((a) => a.type === 0);
+    const awake = status === 'online' || status === 'idle' || status === 'dnd';
+    const night = h >= 1 && h < 8;
+    let text, mood;
+
+    if (game) { text = `jugando a ${game.name}`; mood = 'play'; }
+    else if (status === 'dnd') { text = 'ocupado'; mood = 'busy'; }
+    else if (night) { text = awake ? 'despierto a estas horas' : 'probablemente durmiendo'; mood = awake ? 'online' : 'sleep'; }
+    else {
+      if (h < 13) text = 'empezando el día';
+      else if (h < 16) text = 'hora de comer';
+      else if (h < 20) text = 'por la tarde';
+      else text = 'hora de jugar';
+      mood = status === 'online' ? 'online' : 'day';
+    }
+
+    lt.clock.textContent = label;
+    lt.text.textContent = text;
+    lt.dot.dataset.mood = mood;
+  };
+
+  paintTime();
+  setInterval(paintTime, 15000);
+  document.addEventListener('om:presence', (e) => { presence = e.detail; paintTime(); });
+
+  // 13. Discord + Spotify (Lanyard)
   const widget = document.querySelector('[data-lanyard]');
   if (!widget) return;
 
@@ -498,6 +556,7 @@ const PLAYLIST = [
   };
 
   const render = (d) => {
+    document.dispatchEvent(new CustomEvent('om:presence', { detail: d }));
     const u = d.discord_user || {};
     if (u.avatar) {
       const ext = u.avatar.startsWith('a_') ? 'gif' : 'png';

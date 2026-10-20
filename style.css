@@ -108,7 +108,7 @@ body {
   100% { transform: scale(0) translateY(-20px); opacity: 0; }
 }
 
-/* 1. Pantalla de carga */
+/* Pantalla de carga */
 #loader-screen {
   position: fixed;
   inset: 0;
@@ -2461,3 +2461,84 @@ ul.sub-pills { list-style: none; padding: 0; margin-top: 0; }
 }
 
 ::selection { background: rgba(var(--accent-rgb), 0.45); color: #ffffff; }
+
+/* Compartir */
+.card-share {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.card-share svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-share:hover,
+.card-share:focus-visible {
+  color: #fff;
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.qr-wrap {
+  width: min(220px, 100%);
+  margin: 4px auto 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 40px rgba(var(--accent-rgb, 255, 74, 36), 0.12);
+}
+
+.qr-wrap img { display: block; width: 100%; height: auto; }
+
+/* Hora y estado */
+.local-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 6px 0 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-clock { color: var(--text-main); font-weight: 500; }
+.lt-sep { opacity: 0.5; }
+
+.lt-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #9ca3af;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lt-dot[data-mood="sleep"] { background: #818cf8; box-shadow: 0 0 8px rgba(129, 140, 248, 0.5); }
+.lt-dot[data-mood="online"] { background: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); }
+.lt-dot[data-mood="busy"] { background: #f59e0b; }
+.lt-dot[data-mood="play"] {
+  background: var(--accent, #ff4a24);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb, 255, 74, 36), 0.7);
+  animation: lt-pulse 2s ease-in-out infinite;
+}
+
+@keyframes lt-pulse { 50% { opacity: 0.45; } }
