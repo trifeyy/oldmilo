@@ -1,55 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://oldmilo.xyz/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/aboutme/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/aboutme/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/aboutme/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/aboutme/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/aboutme/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/aboutme/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/ahora/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/ahora/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/now/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/now/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/ahora/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/now/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/setup/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/setup/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/setup/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/setup/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/setup/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/setup/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/fondos/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/fondos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/wallpapers/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/wallpapers/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/fondos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/wallpapers/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/milopack/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/milopack/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/milopack/recursos/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/recursos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/resources/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/milopack/resources/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/recursos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/resources/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/milopack/versiones/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/versiones/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/versions/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/milopack/versions/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/versiones/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/versions/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://oldmilo.xyz/milopack/historial/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/historial/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/changelog/"/>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oldmilo.xyz/en/milopack/changelog/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/historial/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/changelog/"/>
     <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

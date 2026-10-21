@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About me - oldmilo</title>
+  <meta name="description" content="I'm Camilo: born in Colombia, living in Spain, and really into gaming, tech, web development and content creation.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/en/aboutme/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/aboutme/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/aboutme/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/aboutme/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="About me - oldmilo">
+  <meta property="og:description" content="I'm Camilo: born in Colombia, living in Spain, and really into gaming, tech, web development and content creation.">
+  <meta property="og:url" content="https://oldmilo.xyz/en/aboutme/">
+  <meta property="og:image" content="https://oldmilo.xyz/en/aboutme/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="oldmilo - About me">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+    try {
+      const c = localStorage.getItem('om-accent');
+      if (c && /^\d{1,3}, \d{1,3}, \d{1,3}$/.test(c)) {
+        document.documentElement.style.setProperty('--accent', `rgb(${c})`);
+        document.documentElement.style.setProperty('--accent-rgb', c);
+      }
+    } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
+  </script>
+
+  <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  </noscript>
+  <link rel="stylesheet" href="/style.css?v=20">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/en/"},{"@type":"ListItem","position":2,"name":"About me","item":"https://oldmilo.xyz/en/aboutme/"}]}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"AboutPage","url":"https://oldmilo.xyz/en/aboutme/","name":"About me","about":{"@id":"https://oldmilo.xyz/#oldmilo"}}
+  </script>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-md">
+      <div class="card" id="tiltCard">
+        <a class="lang-float" href="/aboutme/" hreflang="es" lang="es" data-lang="es" aria-label="Versión en español">ES</a>
+
+        <div class="avatar-wrap animate-item">
+          <img class="avatar" src="/foto.jpg" alt="Photo of Camilo" width="84" height="84">
+        </div>
+
+        <div class="animate-item">
+          <h1 class="greeting">Hey, I'm Camilo</h1>
+          <div class="handle">@oldmilo</div>
+        </div>
+
+        <ul class="sub-pills animate-item">
+          <li class="pill-btn">🎂 <span data-age>21</span> YEARS OLD</li>
+          <li class="pill-btn" data-birthday hidden>🎁 <span></span></li>
+          <li class="pill-btn">📍 SPAIN</li>
+          <li class="pill-btn">🎮 GAMING &amp; TECH</li>
+        </ul>
+
+        <div class="bio-box animate-item">
+          <h2 class="bio-title">✨ About me</h2>
+          <p class="bio-text">
+            Born in Colombia, currently living in Spain. I'm all about gaming, tech, web development and creating digital content.
+          </p>
+        </div>
+
+        <a class="now-link animate-item" href="/en/now/">
+          <span>What I'm up to right now</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h12.17l-5.59-5.59L12 4l8 8-8 8-1.41-1.41L16.17 13H4v-2z"/></svg>
+        </a>
+
+        <a class="action-btn animate-item" href="/en/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Back to home
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js?v=20"></script>
+</body>
+</html>

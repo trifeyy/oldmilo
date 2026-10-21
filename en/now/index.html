@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Now - oldmilo</title>
+  <meta name="description" content="What I'm up to right now: what I'm playing, what I'm listening to, what I'm working on and my goals.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/en/now/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/ahora/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/now/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/ahora/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Now - oldmilo">
+  <meta property="og:description" content="What I'm up to right now: what I'm playing, what I'm listening to, what I'm working on and my goals.">
+  <meta property="og:url" content="https://oldmilo.xyz/en/now/">
+  <meta property="og:image" content="https://oldmilo.xyz/en/now/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="oldmilo - Now">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+    try {
+      const c = localStorage.getItem('om-accent');
+      if (c && /^\d{1,3}, \d{1,3}, \d{1,3}$/.test(c)) {
+        document.documentElement.style.setProperty('--accent', `rgb(${c})`);
+        document.documentElement.style.setProperty('--accent-rgb', c);
+      }
+    } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
+  </script>
+
+  <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  </noscript>
+  <link rel="stylesheet" href="/style.css?v=20">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/en/"},{"@type":"ListItem","position":2,"name":"Now","item":"https://oldmilo.xyz/en/now/"}]}
+  </script>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-md">
+      <div class="card" id="tiltCard">
+        <a class="lang-float" href="/ahora/" hreflang="es" lang="es" data-lang="es" aria-label="Versión en español">ES</a>
+
+        <div class="animate-item">
+          <h1 class="greeting">Now</h1>
+          <div class="handle">What I'm up to this month</div>
+        </div>
+
+        <ul class="now-list animate-item">
+          <li>
+            <span class="now-ic" aria-hidden="true">🎮</span>
+            <span class="now-k">Playing</span>
+            <span class="now-v">Minecraft and Warzone</span>
+            <span class="now-sub">My go-tos. When I switch it up: LFS, Skate 4, Fortnite or a bit of GTA V.</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🎧</span>
+            <span class="now-k">On repeat</span>
+            <span class="now-v">Mala Conducta</span>
+            <span class="now-sub">The one I can't stop playing lately. Close behind: Fuera del Planeta, No Me Quiero Ver and Soy una Gárgola.</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🛠️</span>
+            <span class="now-k">Working on</span>
+            <span class="now-v">This site, and myself</span>
+            <span class="now-sub">Polishing it bit by bit while I focus on my own stuff.</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🎯</span>
+            <span class="now-k">Goal</span>
+            <span class="now-v">Stay consistent</span>
+            <span class="now-sub">Eight months in the gym and no plans to stop. Grinding hard so everything else levels up too.</span>
+          </li>
+          <li>
+            <span class="now-ic" aria-hidden="true">🛒</span>
+            <span class="now-k">Latest treat</span>
+            <span class="now-v">Monitor number three</span>
+            <span class="now-sub">Three 240 Hz Samsungs on Invision arms. The setup is finally complete. <a href="/en/setup/#pantallas">See it</a></span>
+          </li>
+        </ul>
+
+        <p class="now-date animate-item">Updated October 2026</p>
+
+        <a class="action-btn animate-item" href="/en/">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Back to home
+        </a>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js?v=20"></script>
+</body>
+</html>

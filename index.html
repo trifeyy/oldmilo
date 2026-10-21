@@ -7,6 +7,9 @@
   <meta name="description" content="Gaming, tech y contenido. Todas mis redes, mi pack de texturas miloPack y cómo contactarme.">
   <meta name="theme-color" content="#08090c">
   <link rel="canonical" href="https://oldmilo.xyz/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="oldmilo">
@@ -36,6 +39,13 @@
         document.documentElement.style.setProperty('--accent-rgb', c);
       }
     } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
   </script>
 
   <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -51,7 +61,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=18">
+  <link rel="stylesheet" href="/style.css?v=20">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://oldmilo.xyz/#web","url":"https://oldmilo.xyz/","name":"oldmilo","inLanguage":"es","publisher":{"@id":"https://oldmilo.xyz/#oldmilo"}},{"@type":"ProfilePage","url":"https://oldmilo.xyz/","name":"oldmilo","isPartOf":{"@id":"https://oldmilo.xyz/#web"},"mainEntity":{"@type":"Person","@id":"https://oldmilo.xyz/#oldmilo","name":"oldmilo","alternateName":"Camilo","url":"https://oldmilo.xyz/","image":"https://oldmilo.xyz/foto.jpg","description":"Gaming, tech y contenido.","sameAs":["https://www.youtube.com/@oldmiilo","https://twitch.tv/plaiices","https://www.instagram.com/camilo.magiic/","https://www.tiktok.com/@user81737491837","https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky"]}}]}
   </script>
@@ -99,6 +109,9 @@
           <small>Escanéame. Toca para volver.</small>
         </div>
 
+        <button class="card-share card-term" type="button" data-cmdk data-goatcounter-click="abrir-menu" aria-label="Menú de comandos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7l5 5-5 5M12 17h7"/></svg>
+        </button>
         <button class="card-share" type="button" data-open="shareOverlay" data-goatcounter-click="abrir-compartir" aria-label="Compartir mi página">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
         </button>
@@ -189,6 +202,8 @@
             <button class="accent-btn" type="button" id="accentBtn" aria-label="Cambiar el color de la página" aria-expanded="false" aria-controls="accentMenu"><span></span></button>
             <div class="accent-menu" id="accentMenu" role="group" aria-label="Colores" hidden></div>
           </div>
+          <span class="foot-sep" aria-hidden="true">·</span>
+          <a class="lang-link" href="/en/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
         </div>
       </div>
     </div>
@@ -280,6 +295,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=18"></script>
+  <script src="/script.js?v=20"></script>
 </body>
 </html>

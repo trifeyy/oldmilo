@@ -7,6 +7,9 @@
   <meta name="description" content="miloPack, el pack de texturas de oldmilo para Minecraft Java Edition. Descargas, versiones anteriores, historial de cambios y recursos para creadores.">
   <meta name="theme-color" content="#08090c">
   <link rel="canonical" href="https://oldmilo.xyz/milopack/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/milopack/">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="oldmilo">
@@ -36,6 +39,13 @@
         document.documentElement.style.setProperty('--accent-rgb', c);
       }
     } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
   </script>
 
   <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -49,7 +59,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=18">
+  <link rel="stylesheet" href="/style.css?v=20">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/"},{"@type":"ListItem","position":2,"name":"miloPack","item":"https://oldmilo.xyz/milopack/"}]}
   </script>
@@ -66,6 +76,7 @@
   <main class="stage">
     <div class="card-border-wrap wrap-lg">
       <div class="pack-container" id="tiltCard" data-tilt="4">
+        <a class="lang-float" href="/en/milopack/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
 
         <div class="pack-header animate-item">
           <div class="pack-logo-wrap is-square">
@@ -99,6 +110,6 @@
     </div>
   </main>
 
-  <script src="/script.js?v=18"></script>
+  <script src="/script.js?v=20"></script>
 </body>
 </html>

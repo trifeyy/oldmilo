@@ -7,6 +7,9 @@
   <meta name="description" content="Soy Camilo: nací en Colombia, vivo en España y me apasionan el gaming, la tecnología, el desarrollo web y la creación de contenido.">
   <meta name="theme-color" content="#08090c">
   <link rel="canonical" href="https://oldmilo.xyz/aboutme/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/aboutme/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/aboutme/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/aboutme/">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="oldmilo">
@@ -36,6 +39,13 @@
         document.documentElement.style.setProperty('--accent-rgb', c);
       }
     } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
   </script>
 
   <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -49,7 +59,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=18">
+  <link rel="stylesheet" href="/style.css?v=20">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/"},{"@type":"ListItem","position":2,"name":"Sobre mí","item":"https://oldmilo.xyz/aboutme/"}]}
   </script>
@@ -69,6 +79,7 @@
   <main class="stage">
     <div class="card-border-wrap wrap-md">
       <div class="card" id="tiltCard">
+        <a class="lang-float" href="/en/aboutme/" hreflang="en" lang="en" data-lang="en" aria-label="English version">EN</a>
 
         <div class="avatar-wrap animate-item">
           <img class="avatar" src="/foto.jpg" alt="Foto de Camilo" width="84" height="84">
@@ -107,6 +118,6 @@
     </div>
   </main>
 
-  <script src="/script.js?v=18"></script>
+  <script src="/script.js?v=20"></script>
 </body>
 </html>

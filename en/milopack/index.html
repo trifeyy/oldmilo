@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>miloPack - Minecraft texture pack</title>
+  <meta name="description" content="miloPack, oldmilo's texture pack for Minecraft Java Edition. Downloads, older versions, changelog and resources for creators.">
+  <meta name="theme-color" content="#08090c">
+  <link rel="canonical" href="https://oldmilo.xyz/en/milopack/">
+  <link rel="alternate" hreflang="es" href="https://oldmilo.xyz/milopack/">
+  <link rel="alternate" hreflang="en" href="https://oldmilo.xyz/en/milopack/">
+  <link rel="alternate" hreflang="x-default" href="https://oldmilo.xyz/milopack/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="oldmilo">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="miloPack - Minecraft texture pack">
+  <meta property="og:description" content="miloPack, oldmilo's texture pack for Minecraft Java Edition. Downloads, older versions, changelog and resources for creators.">
+  <meta property="og:url" content="https://oldmilo.xyz/en/milopack/">
+  <meta property="og:image" content="https://oldmilo.xyz/en/milopack/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="miloPack - Minecraft texture pack">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <script>
+    document.documentElement.classList.add('js');
+    try {
+      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+        document.documentElement.classList.add('no-loader');
+    } catch (e) { document.documentElement.classList.add('no-loader'); }
+    try {
+      const c = localStorage.getItem('om-accent');
+      if (c && /^\d{1,3}, \d{1,3}, \d{1,3}$/.test(c)) {
+        document.documentElement.style.setProperty('--accent', `rgb(${c})`);
+        document.documentElement.style.setProperty('--accent-rgb', c);
+      }
+    } catch (e) { }
+    try {
+      const p = localStorage.getItem('om-lang');
+      if (p && p !== document.documentElement.lang) {
+        const alt = document.querySelector(`link[rel="alternate"][hreflang="${p}"]`);
+        if (alt) location.replace(new URL(alt.href).pathname + location.hash);
+      }
+    } catch (e) { }
+  </script>
+
+  <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  </noscript>
+  <link rel="stylesheet" href="/style.css?v=20">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/en/"},{"@type":"ListItem","position":2,"name":"miloPack","item":"https://oldmilo.xyz/en/milopack/"}]}
+  </script>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+  </div>
+
+  <main class="stage">
+    <div class="card-border-wrap wrap-lg">
+      <div class="pack-container" id="tiltCard" data-tilt="4">
+        <a class="lang-float" href="/milopack/" hreflang="es" lang="es" data-lang="es" aria-label="Versión en español">ES</a>
+
+        <div class="pack-header animate-item">
+          <div class="pack-logo-wrap is-square">
+            <img class="pack-logo is-square" src="/milopack/logo.svg" alt="miloPack logo" width="76" height="76" decoding="async">
+          </div>
+          <h1 class="pack-title">miloPack</h1>
+        </div>
+
+        <div class="video-box animate-item">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="miloPack Review" loading="lazy" allowfullscreen></iframe>
+        </div>
+
+        <div class="download-card animate-item">
+          <p class="download-title">Download for Minecraft 1.8.9 / 1.20+ (Java Edition)</p>
+          <div class="download-btns">
+            <button class="dl-btn" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zm7-18-1.4 1.4L11 4v10.2l-4.6-4.6L5 11l7 7 7-7-1.4-1.4-4.6 4.6V4l.4-.6z"/></svg> Download .zip <span class="soon-tag">Coming soon</span></button>
+          </div>
+          <p class="download-note">
+            It's a single .zip that works on Windows, macOS and Linux. If the download gives you trouble, try turning off your ad blocker.
+          </p>
+        </div>
+
+        <nav class="sub-pills animate-item" aria-label="More about miloPack">
+          <a class="pill-btn" href="/en/milopack/resources/">Creator resources</a>
+          <a class="pill-btn" href="/en/milopack/versions/">Older versions</a>
+          <a class="pill-btn" href="/en/milopack/changelog/">Changelog</a>
+          <a class="pill-btn primary-pill" href="/en/">oldmilo.xyz</a>
+        </nav>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="/script.js?v=20"></script>
+</body>
+</html>

@@ -19,6 +19,13 @@ const PLAYLIST = [
 
 (() => {
   const root = document.documentElement;
+  const EN = root.lang === 'en';
+  const L = (es, en) => (EN ? en : es);
+
+  if (EN) {
+    document.querySelectorAll('[data-en]').forEach((el) => { el.textContent = el.dataset.en; });
+    document.querySelectorAll('[data-en-href]').forEach((a) => { a.href = a.dataset.enHref; });
+  }
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -114,7 +121,7 @@ const PLAYLIST = [
 
   document.querySelectorAll('[data-birthday]').forEach((el) => {
     const span = el.querySelector('span') || el;
-    span.textContent = isBirthday ? 'HOY ES MI CUMPLE' : daysLeft === 1 ? 'CUMPLO MAÑANA' : `CUMPLO EN ${daysLeft} DÍAS`;
+    span.textContent = isBirthday ? L('HOY ES MI CUMPLE', "IT'S MY BIRTHDAY") : daysLeft === 1 ? L('CUMPLO MAÑANA', 'BIRTHDAY TOMORROW') : L(`CUMPLO EN ${daysLeft} DÍAS`, `BIRTHDAY IN ${daysLeft} DAYS`);
     el.hidden = false;
   });
 
@@ -284,13 +291,13 @@ const PLAYLIST = [
       if (!target) return;
       try {
         await navigator.clipboard.writeText(target.textContent.trim());
-        btn.textContent = '¡Copiado!';
+        btn.textContent = L('¡Copiado!', 'Copied!');
       } catch (e) {
         const range = document.createRange();
         range.selectNodeContents(target);
         getSelection().removeAllRanges();
         getSelection().addRange(range);
-        btn.textContent = 'Selecciónalo y copia';
+        btn.textContent = L('Selecciónalo y copia', 'Select and copy it');
       }
       setTimeout(() => (btn.textContent = label), 2000);
     });
@@ -363,10 +370,10 @@ const PLAYLIST = [
       toast.className = 'egg-toast';
       toast.setAttribute('role', 'status');
       toast.innerHTML = `<img src="/milopack/logo.svg" alt="" width="40" height="40">
-        <span><strong>¡Logro desbloqueado!</strong><small></small></span>`;
+        <span><strong>${L('¡Logro desbloqueado!', 'Achievement unlocked!')}</strong><small></small></span>`;
       toast.querySelector('small').textContent = found
-        ? 'Otra vez por aquí, ¿eh? 👀'
-        : 'Has encontrado el secreto de oldmilo';
+        ? L('Otra vez por aquí, ¿eh? 👀', 'Back again, huh? 👀')
+        : L('Has encontrado el secreto de oldmilo', "You found oldmilo's secret");
       document.body.appendChild(toast);
       requestAnimationFrame(() => toast.classList.add('is-in'));
       setTimeout(() => toast.classList.remove('is-in'), 3600);
@@ -457,7 +464,7 @@ const PLAYLIST = [
     const paint = () => {
       const t = PLAYLIST[current];
       $('playerCover').src = coverUrl(t.cover);
-      $('playerCover').alt = `Portada de ${t.title}`;
+      $('playerCover').alt = L(`Portada de ${t.title}`, `${t.title} cover art`);
       $('playerTitle').textContent = t.title;
       $('playerArtist').textContent = t.artist;
       [...list.children].forEach((li, i) => {
@@ -478,9 +485,9 @@ const PLAYLIST = [
         quick.hidden = !hasStarted;
         quick.parentElement.classList.toggle('has-quick', hasStarted);
         quick.classList.toggle('is-playing', playing);
-        quick.setAttribute('aria-label', playing ? 'Pausar música' : 'Reanudar música');
+        quick.setAttribute('aria-label', playing ? L('Pausar música', 'Pause music') : L('Reanudar música', 'Resume music'));
       }
-      $('playerPlay').setAttribute('aria-label', playing ? 'Pausar' : 'Reproducir');
+      $('playerPlay').setAttribute('aria-label', playing ? L('Pausar', 'Pause') : L('Reproducir', 'Play'));
       $('playerPos').textContent = fmt(position);
       $('playerDur').textContent = fmt(duration);
       const pct = duration ? (position / duration) * 100 : 0;
@@ -499,7 +506,7 @@ const PLAYLIST = [
         }, (c) => {
           controller = c;
           const frame = document.querySelector('.player-embed iframe');
-          if (frame && !frame.title) frame.title = 'Reproductor de Spotify';
+          if (frame && !frame.title) frame.title = L('Reproductor de Spotify', 'Spotify player');
           c.addListener('ready', () => {
             if (playWhenReady) { playWhenReady = false; c.play(); }
           });
@@ -571,7 +578,7 @@ const PLAYLIST = [
   if (shareNative && navigator.share) {
     shareNative.hidden = false;
     shareNative.addEventListener('click', () => {
-      navigator.share({ title: 'oldmilo', text: 'Mira la página de oldmilo', url: 'https://oldmilo.xyz' }).catch(() => { });
+      navigator.share({ title: 'oldmilo', text: L('Mira la página de oldmilo', 'Check out oldmilo'), url: EN ? 'https://oldmilo.xyz/en/' : 'https://oldmilo.xyz' }).catch(() => { });
     });
   }
 
@@ -603,15 +610,15 @@ const PLAYLIST = [
     const night = h >= 1 && h < 8;
     let text, mood;
 
-    if (isBirthday) { text = 'hoy es mi cumpleaños'; mood = 'play'; }
-    else if (game) { text = `jugando a ${game.name}`; mood = 'play'; }
-    else if (status === 'dnd') { text = 'ocupado'; mood = 'busy'; }
-    else if (night) { text = awake ? 'despierto a estas horas' : 'probablemente durmiendo'; mood = awake ? 'online' : 'sleep'; }
+    if (isBirthday) { text = L('hoy es mi cumpleaños', "it's my birthday"); mood = 'play'; }
+    else if (game) { text = L(`jugando a ${game.name}`, `playing ${game.name}`); mood = 'play'; }
+    else if (status === 'dnd') { text = L('ocupado', 'busy'); mood = 'busy'; }
+    else if (night) { text = awake ? L('despierto a estas horas', 'still up at this hour') : L('probablemente durmiendo', 'probably asleep'); mood = awake ? 'online' : 'sleep'; }
     else {
-      if (h < 13) text = 'empezando el día';
-      else if (h < 16) text = 'hora de comer';
-      else if (h < 20) text = 'por la tarde';
-      else text = 'hora de jugar';
+      if (h < 13) text = L('empezando el día', 'starting the day');
+      else if (h < 16) text = L('hora de comer', 'lunch time');
+      else if (h < 20) text = L('por la tarde', 'afternoon mode');
+      else text = L('hora de jugar', 'gaming time');
       mood = status === 'online' ? 'online' : 'day';
     }
 
@@ -674,6 +681,7 @@ const PLAYLIST = [
   });
 
   // 15. Tarjeta reversible
+  let cardFlip = null;
   const flipCard = document.getElementById('tiltCard');
   const flipWrap = flipCard && flipCard.closest('.card-border-wrap');
   const back = document.getElementById('cardBack');
@@ -694,6 +702,7 @@ const PLAYLIST = [
       if (toBack) window.goatcounter?.count?.({ path: 'tarjeta-girada', title: 'Tarjeta girada', event: true });
       flipping = false;
     };
+    cardFlip = flip;
 
     const blocked = (t) => t.closest('a, button, img, input, .accent-menu');
     let hold = null;
@@ -720,7 +729,7 @@ const PLAYLIST = [
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (!d || !d.count) return;
-        document.getElementById('visitNum').textContent = String(d.count).replace(/[,\s\u202f]/g, '.');
+        document.getElementById('visitNum').textContent = String(d.count).replace(/[,.\s\u202f]/g, L('.', ','));
         visitBox.hidden = false;
       })
       .catch(() => { });
@@ -728,12 +737,12 @@ const PLAYLIST = [
 
   // 17. Color
   const ACCENTS = [
-    { name: 'Rojo', rgb: '255, 74, 36' },
-    { name: 'Azul', rgb: '76, 141, 255' },
-    { name: 'Verde', rgb: '52, 211, 153' },
-    { name: 'Morado', rgb: '167, 139, 250' },
-    { name: 'Rosa', rgb: '255, 92, 154' },
-    { name: 'Amarillo', rgb: '251, 191, 36' }
+    { id: 'rojo', name: L('Rojo', 'Red'), rgb: '255, 74, 36' },
+    { id: 'azul', name: L('Azul', 'Blue'), rgb: '76, 141, 255' },
+    { id: 'verde', name: L('Verde', 'Green'), rgb: '52, 211, 153' },
+    { id: 'morado', name: L('Morado', 'Purple'), rgb: '167, 139, 250' },
+    { id: 'rosa', name: L('Rosa', 'Pink'), rgb: '255, 92, 154' },
+    { id: 'amarillo', name: L('Amarillo', 'Yellow'), rgb: '251, 191, 36' }
   ];
   const accentBtn = document.getElementById('accentBtn');
   const accentMenu = document.getElementById('accentMenu');
@@ -748,7 +757,7 @@ const PLAYLIST = [
   if (accentBtn && accentMenu) {
     let saved = ACCENTS[0].rgb;
     try { saved = localStorage.getItem('om-accent') || saved; } catch (e) { }
-    accentMenu.innerHTML = ACCENTS.map((a) => `<button type="button" data-rgb="${a.rgb}" style="--c:${a.rgb}" aria-label="${a.name}" title="${a.name}" aria-pressed="${a.rgb === saved}"></button>`).join('');
+    accentMenu.innerHTML = ACCENTS.map((a) => `<button type="button" data-rgb="${a.rgb}" data-id="${a.id}" style="--c:${a.rgb}" aria-label="${a.name}" title="${a.name}" aria-pressed="${a.rgb === saved}"></button>`).join('');
 
     const toggle = (open) => {
       accentMenu.hidden = !open;
@@ -759,58 +768,286 @@ const PLAYLIST = [
       const b = e.target.closest('button');
       if (!b) return;
       setAccent(b.dataset.rgb, true);
-      window.goatcounter?.count?.({ path: 'color-' + b.title.toLowerCase(), title: 'Color: ' + b.title, event: true });
+      window.goatcounter?.count?.({ path: 'color-' + b.dataset.id, title: 'Color: ' + b.dataset.id, event: true });
     });
     document.addEventListener('click', (e) => { if (!accentMenu.hidden && !e.target.closest('.accent-pick')) toggle(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !accentMenu.hidden) { toggle(false); accentBtn.focus(); } });
   }
 
-  // 18. Confeti de cumpleaños
+  // 18. Confeti
+  const confetti = () => {
+    const cv = document.createElement('canvas');
+    cv.className = 'confetti';
+    document.body.appendChild(cv);
+    const ctx = cv.getContext('2d');
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = innerWidth * dpr;
+    cv.height = innerHeight * dpr;
+    ctx.scale(dpr, dpr);
+    const acc = getComputedStyle(root).getPropertyValue('--accent-rgb').trim() || '255, 74, 36';
+    const cols = [`rgb(${acc})`, '#ffffff', '#9ca3af'];
+    const bits = Array.from({ length: 140 }, () => ({
+      x: innerWidth / 2 + (Math.random() - 0.5) * 120,
+      y: innerHeight * 0.45,
+      vx: (Math.random() - 0.5) * 14,
+      vy: -Math.random() * 14 - 4,
+      r: Math.random() * Math.PI,
+      vr: (Math.random() - 0.5) * 0.3,
+      w: 5 + Math.random() * 5,
+      c: cols[Math.floor(Math.random() * cols.length)]
+    }));
+    const t0 = performance.now();
+    const tick = (now) => {
+      const t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      ctx.globalAlpha = Math.max(0, 1 - Math.max(0, t - 2.2) / 0.8);
+      bits.forEach((b) => {
+        b.vy += 0.35; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
+        ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r);
+        ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.w / 4, b.w, b.w / 2);
+        ctx.restore();
+      });
+      if (t < 3) requestAnimationFrame(tick); else cv.remove();
+    };
+    requestAnimationFrame(tick);
+  };
+
   if (isBirthday && document.getElementById('tiltCard') && !reduceMotion) {
     let seen = false;
     try { seen = sessionStorage.getItem('om-cumple'); sessionStorage.setItem('om-cumple', '1'); } catch (e) { }
     if (!seen) {
-      const go = () => {
-        const cv = document.createElement('canvas');
-        cv.className = 'confetti';
-        document.body.appendChild(cv);
-        const ctx = cv.getContext('2d');
-        const dpr = Math.min(devicePixelRatio || 1, 2);
-        cv.width = innerWidth * dpr;
-        cv.height = innerHeight * dpr;
-        ctx.scale(dpr, dpr);
-        const acc = getComputedStyle(root).getPropertyValue('--accent-rgb').trim() || '255, 74, 36';
-        const cols = [`rgb(${acc})`, '#ffffff', '#9ca3af'];
-        const bits = Array.from({ length: 140 }, () => ({
-          x: innerWidth / 2 + (Math.random() - 0.5) * 120,
-          y: innerHeight * 0.45,
-          vx: (Math.random() - 0.5) * 14,
-          vy: -Math.random() * 14 - 4,
-          r: Math.random() * Math.PI,
-          vr: (Math.random() - 0.5) * 0.3,
-          w: 5 + Math.random() * 5,
-          c: cols[Math.floor(Math.random() * cols.length)]
-        }));
-        const t0 = performance.now();
-        const tick = (now) => {
-          const t = (now - t0) / 1000;
-          ctx.clearRect(0, 0, innerWidth, innerHeight);
-          ctx.globalAlpha = Math.max(0, 1 - Math.max(0, t - 2.2) / 0.8);
-          bits.forEach((b) => {
-            b.vy += 0.35; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
-            ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r);
-            ctx.fillStyle = b.c; ctx.fillRect(-b.w / 2, -b.w / 4, b.w, b.w / 2);
-            ctx.restore();
-          });
-          if (t < 3) requestAnimationFrame(tick); else cv.remove();
-        };
-        requestAnimationFrame(tick);
-      };
-      setTimeout(go, root.classList.contains('no-loader') ? 500 : 4200);
+      setTimeout(confetti, root.classList.contains('no-loader') ? 500 : 4200);
     }
   }
 
-  // 19. Discord + Spotify (Lanyard)
+  // 19. Idioma
+  document.querySelectorAll('[data-lang]').forEach((a) => {
+    a.addEventListener('click', () => { try { localStorage.setItem('om-lang', a.dataset.lang); } catch (e) { } });
+  });
+
+  const otherLang = () => {
+    const alt = document.querySelector(`link[rel="alternate"][hreflang="${EN ? 'es' : 'en'}"]`);
+    return alt ? new URL(alt.href).pathname : (EN ? '/' : '/en/');
+  };
+
+  // 20. Menú Ctrl+K
+  const toast = (msg) => {
+    const t = document.createElement('div');
+    t.className = 'egg-toast';
+    t.setAttribute('role', 'status');
+    t.innerHTML = '<img src="/milopack/logo.svg" alt="" width="40" height="40"><span><strong></strong></span>';
+    t.querySelector('strong').textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('is-in'));
+    setTimeout(() => t.classList.remove('is-in'), 2400);
+    setTimeout(() => t.remove(), 3000);
+  };
+
+  const copy = async (text, msg) => {
+    try { await navigator.clipboard.writeText(text); toast(msg); } catch (e) { prompt('', text); }
+  };
+
+  const matrix = () => {
+    if (reduceMotion) return toast('Wake up, Neo...');
+    const cv = document.createElement('canvas');
+    cv.className = 'confetti';
+    document.body.appendChild(cv);
+    const ctx = cv.getContext('2d');
+    cv.width = innerWidth; cv.height = innerHeight;
+    const size = 16, cols = Math.ceil(innerWidth / size);
+    const drops = Array.from({ length: cols }, () => Math.random() * -40);
+    const acc = getComputedStyle(root).getPropertyValue('--accent-rgb').trim() || '255, 74, 36';
+    const chars = 'OLDMILO0123456789';
+    const t0 = performance.now();
+    const tick = (now) => {
+      const t = (now - t0) / 1000;
+      ctx.fillStyle = 'rgba(8, 9, 12, 0.18)';
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.font = `${size}px ui-monospace, Menlo, Consolas, monospace`;
+      drops.forEach((y, i) => {
+        ctx.fillStyle = Math.random() < 0.08 ? '#ffffff' : `rgb(${acc})`;
+        ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * size, y * size);
+        drops[i] = y * size > cv.height && Math.random() > 0.96 ? 0 : y + 1;
+      });
+      cv.style.opacity = Math.max(0, 1 - Math.max(0, t - 3.2) / 0.8);
+      if (t < 4) requestAnimationFrame(tick); else cv.remove();
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const go = (path) => () => { location.href = path; };
+  const ext = (url) => () => { window.open(url, '_blank', 'noopener'); };
+  const has = (id) => !!document.getElementById(id);
+  const P = (es, en) => (EN ? en : es);
+
+  const ICON = {
+    page: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/>',
+    link: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+    act: '<path d="M13 3 5 14h6l-1 7 8-11h-6z"/>',
+    dot: '<circle cx="12" cy="12" r="5"/>',
+    lang: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+  };
+
+  const COMMANDS = [
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Inicio', 'Home'), k: 'home inicio principal', run: go(P('/', '/en/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Sobre mí', 'About me'), k: 'about sobre quien bio camilo', run: go(P('/aboutme/', '/en/aboutme/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Ahora', 'Now'), k: 'now ahora jugando bucle objetivo', run: go(P('/ahora/', '/en/now/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Mi setup', 'My setup'), k: 'setup pc specs gpu perifericos teclado raton monitor', run: go(P('/setup/', '/en/setup/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Fondos de pantalla', 'Wallpapers'), k: 'fondos wallpapers 4k descargar', run: go(P('/fondos/', '/en/wallpapers/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: 'miloPack', k: 'milopack pack texturas minecraft', run: go(P('/milopack/', '/en/milopack/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Recursos para creadores', 'Creator resources'), k: 'recursos resources logo creators', run: go(P('/milopack/recursos/', '/en/milopack/resources/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Versiones anteriores', 'Older versions'), k: 'versiones versions antiguas old', run: go(P('/milopack/versiones/', '/en/milopack/versions/')) },
+    { g: L('Ir a', 'Go to'), i: 'page', t: L('Historial de cambios', 'Changelog'), k: 'historial changelog cambios novedades', run: go(P('/milopack/historial/', '/en/milopack/changelog/')) },
+    { g: L('Acciones', 'Actions'), i: 'act', t: L('Copiar mi email', 'Copy my email'), k: 'email correo contacto contact mail', run: () => copy('contacto@oldmilo.xyz', L('Email copiado', 'Email copied')) },
+    { g: L('Acciones', 'Actions'), i: 'act', t: L('Copiar el enlace de esta página', 'Copy link to this page'), k: 'copiar link enlace url', run: () => copy(location.href.split('#')[0], L('Enlace copiado', 'Link copied')) },
+    { g: L('Acciones', 'Actions'), i: 'act', t: L('Compartir y QR', 'Share and QR code'), k: 'share compartir qr', when: () => has('shareOverlay'), run: () => openModal(document.getElementById('shareOverlay'), document.querySelector('[data-open="shareOverlay"]')) },
+    { g: L('Acciones', 'Actions'), i: 'act', t: L('Abrir mi música', 'Open my music'), k: 'musica music spotify canciones songs player', when: () => has('musicOverlay'), run: () => openModal(document.getElementById('musicOverlay'), document.getElementById('musicBtn')) },
+    { g: L('Acciones', 'Actions'), i: 'act', t: L('Girar la tarjeta', 'Flip the card'), k: 'girar flip tarjeta card qr', when: () => !!cardFlip, run: () => cardFlip() },
+    { g: L('Acciones', 'Actions'), i: 'lang', t: L('Ver en inglés', 'Ver en español'), k: 'english ingles español spanish idioma language', run: () => { try { localStorage.setItem('om-lang', EN ? 'es' : 'en'); } catch (e) { } location.href = otherLang(); } },
+    ...ACCENTS.map((a) => ({ g: 'Color', i: 'dot', c: a.rgb, t: `Color: ${a.name}`, k: 'color colour tema theme ' + a.id + ' ' + a.name.toLowerCase(), run: () => setAccent(a.rgb, true) })),
+    { g: L('Redes', 'Socials'), i: 'link', t: 'YouTube', k: 'youtube videos', run: ext('https://www.youtube.com/@oldmiilo') },
+    { g: L('Redes', 'Socials'), i: 'link', t: 'Twitch', k: 'twitch directo stream live', run: ext('https://twitch.tv/plaiices') },
+    { g: L('Redes', 'Socials'), i: 'link', t: 'TikTok', k: 'tiktok', run: ext('https://www.tiktok.com/@' + CONFIG.tiktok) },
+    { g: L('Redes', 'Socials'), i: 'link', t: 'Instagram', k: 'instagram ig', run: ext('https://www.instagram.com/camilo.magiic/') },
+    { g: L('Redes', 'Socials'), i: 'link', t: 'Discord', k: 'discord', run: ext('https://discord.com/users/' + CONFIG.discordId) },
+    { g: L('Redes', 'Socials'), i: 'link', t: 'Spotify', k: 'spotify', run: ext(CONFIG.spotifyProfile) }
+  ];
+
+  const SECRETS = {
+    milo: () => egg(),
+    sudo: () => toast(L('Buen intento 😏', 'Nice try 😏')),
+    matrix: () => matrix(),
+    fiesta: () => (reduceMotion ? toast('🎉') : confetti()),
+    party: () => (reduceMotion ? toast('🎉') : confetti()),
+    hola: () => toast(L('¡Hola! Gracias por pasarte 👋', 'Hey! Thanks for stopping by 👋')),
+    hello: () => toast(L('¡Hola! Gracias por pasarte 👋', 'Hey! Thanks for stopping by 👋')),
+    gg: () => toast('GG WP 🏆')
+  };
+
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+
+  const cmdk = document.createElement('div');
+  cmdk.className = 'cmdk';
+  cmdk.hidden = true;
+  cmdk.innerHTML = `
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="${L('Menú de comandos', 'Command menu')}">
+      <div class="cmdk-head">
+        <span class="cmdk-prompt" aria-hidden="true">&gt;</span>
+        <input class="cmdk-input" type="text" role="combobox" aria-label="${L('Buscar', 'Search')}" aria-expanded="true" aria-controls="cmdkList" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="${L('Busca una página o acción', 'Search for a page or action')}">
+        <kbd class="cmdk-esc">esc</kbd>
+      </div>
+      <ul class="cmdk-list" id="cmdkList" role="listbox"></ul>
+      <div class="cmdk-foot">
+        <span class="cmdk-keys"><kbd>↑</kbd><kbd>↓</kbd> ${L('moverse', 'navigate')} <kbd>↵</kbd> ${L('abrir', 'open')}</span>
+        <span>${L('Hay comandos secretos 👀', 'There are secret commands 👀')}</span>
+      </div>
+    </div>`;
+  document.body.appendChild(cmdk);
+
+  const input = cmdk.querySelector('.cmdk-input');
+  const list = cmdk.querySelector('.cmdk-list');
+  let shown = [];
+  let sel = 0;
+  let lastFocus = null;
+
+  const paint = () => {
+    const q = norm(input.value);
+    const pool = COMMANDS.filter((c) => !c.when || c.when());
+    shown = !q ? pool : pool
+      .map((c) => {
+        const hay = norm(c.t + ' ' + c.k + ' ' + c.g);
+        const title = norm(c.t);
+        let score = title.startsWith(q) ? 3 : title.includes(q) ? 2 : hay.includes(q) ? 1 : 0;
+        if (!score) {
+          let i = 0;
+          for (const ch of hay) if (ch === q[i]) i++;
+          if (i === q.length) score = 0.5;
+        }
+        return { c, score };
+      })
+      .filter((x) => x.score)
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.c);
+
+    const secret = SECRETS[q] ? [{ g: '???', i: 'act', t: L(`Ejecutar "${q}"`, `Run "${q}"`), secret: true, run: SECRETS[q] }] : [];
+    shown = secret.concat(shown);
+    sel = Math.min(sel, Math.max(shown.length - 1, 0));
+
+    let html = '';
+    let group = '';
+    shown.forEach((c, i) => {
+      if (c.g !== group) { group = c.g; html += `<li class="cmdk-group" role="presentation">${group}</li>`; }
+      const icon = c.i === 'dot'
+        ? `<span class="cmdk-dot" style="--c:${c.c}"></span>`
+        : `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[c.i]}</svg>`;
+      html += `<li class="cmdk-item${c.secret ? ' is-secret' : ''}" role="option" id="cmdk-${i}" data-i="${i}" aria-selected="${i === sel}">${icon}<span></span>${c.i === 'link' ? '<em>↗</em>' : ''}</li>`;
+    });
+    if (!shown.length) html = `<li class="cmdk-empty" role="presentation">${L('Nada por aquí. Prueba otra cosa', 'Nothing here. Try something else')}</li>`;
+    list.innerHTML = html;
+    list.querySelectorAll('.cmdk-item').forEach((li) => { li.querySelector('span').textContent = shown[+li.dataset.i].t; });
+    input.setAttribute('aria-activedescendant', shown.length ? 'cmdk-' + sel : '');
+    list.querySelector(`[data-i="${sel}"]`)?.scrollIntoView({ block: 'nearest' });
+  };
+
+  const openCmdk = () => {
+    if (!cmdk.hidden) return;
+    lastFocus = document.activeElement;
+    input.value = '';
+    sel = 0;
+    paint();
+    cmdk.hidden = false;
+    input.focus();
+    requestAnimationFrame(() => cmdk.classList.add('is-open'));
+    document.querySelector('main')?.setAttribute('inert', '');
+    window.goatcounter?.count?.({ path: 'menu-comandos', title: 'Menú de comandos', event: true });
+  };
+
+  const closeCmdk = () => {
+    if (cmdk.hidden) return;
+    cmdk.classList.remove('is-open');
+    document.querySelector('main')?.removeAttribute('inert');
+    setTimeout(() => { cmdk.hidden = true; }, 160);
+    lastFocus?.focus?.();
+  };
+
+  const runSel = () => {
+    const c = shown[sel];
+    if (!c) return;
+    closeCmdk();
+    setTimeout(c.run, 120);
+    if (c.secret) window.goatcounter?.count?.({ path: 'secreto-' + norm(input.value), title: 'Comando secreto', event: true });
+  };
+
+  input.addEventListener('input', () => { sel = 0; paint(); });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) { e.preventDefault(); sel = (sel + 1) % Math.max(shown.length, 1); paint(); }
+    else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) { e.preventDefault(); sel = (sel - 1 + shown.length) % Math.max(shown.length, 1); paint(); }
+    else if (e.key === 'Enter') { e.preventDefault(); runSel(); }
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeCmdk(); }
+  });
+  list.addEventListener('pointermove', (e) => {
+    const li = e.target.closest('.cmdk-item');
+    if (li && +li.dataset.i !== sel) { sel = +li.dataset.i; list.querySelectorAll('.cmdk-item').forEach((x) => x.setAttribute('aria-selected', +x.dataset.i === sel)); }
+  });
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('.cmdk-item');
+    if (li) { sel = +li.dataset.i; runSel(); }
+  });
+  cmdk.addEventListener('click', (e) => { if (e.target === cmdk) closeCmdk(); });
+  cmdk.querySelector('.cmdk-esc').addEventListener('click', closeCmdk);
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      cmdk.hidden ? openCmdk() : closeCmdk();
+    } else if (e.key === '/' && cmdk.hidden && !openOverlay && !e.target.closest('input, textarea, [contenteditable]')) {
+      e.preventDefault();
+      openCmdk();
+    }
+  });
+  document.querySelectorAll('[data-cmdk]').forEach((b) => b.addEventListener('click', openCmdk));
+
+  // 21. Discord + Spotify (Lanyard)
   const widget = document.querySelector('[data-lanyard]');
   if (!widget) return;
 
@@ -826,10 +1063,10 @@ const PLAYLIST = [
   const defaultCover = cover ? cover.src : '';
 
   const STATUS = {
-    online: 'En línea',
-    idle: 'Ausente',
-    dnd: 'No molestar',
-    offline: 'Desconectado'
+    online: L('En línea', 'Online'),
+    idle: L('Ausente', 'Away'),
+    dnd: L('No molestar', 'Do not disturb'),
+    offline: L('Desconectado', 'Offline')
   };
 
   let progressTimer = null;
@@ -861,8 +1098,8 @@ const PLAYLIST = [
     pill.href = CONFIG.spotifyProfile;
     cover.src = defaultCover;
     label.textContent = 'Spotify';
-    track.textContent = 'Ahora mismo no suena nada';
-    pill.setAttribute('aria-label', 'Mi perfil de Spotify');
+    track.textContent = L('Ahora mismo no suena nada', 'Nothing playing right now');
+    pill.setAttribute('aria-label', L('Mi perfil de Spotify', 'My Spotify profile'));
     bar.style.transform = 'scaleX(0)';
   };
 
@@ -880,7 +1117,7 @@ const PLAYLIST = [
     const custom = (d.activities || []).find((a) => a.type === 4 && a.state);
     const game = (d.activities || []).find((a) => a.type === 0);
     let text = STATUS[status] || STATUS.offline;
-    if (game) text = `Jugando a ${game.name}`;
+    if (game) text = L(`Jugando a ${game.name}`, `Playing ${game.name}`);
     else if (custom) text = (custom.emoji && !custom.emoji.id ? custom.emoji.name + ' ' : '') + custom.state;
     dText.textContent = text;
     paintGame(game);
@@ -892,9 +1129,9 @@ const PLAYLIST = [
     document.dispatchEvent(new CustomEvent('om:song', { detail: { from: 'lanyard', url: s.album_art_url } }));
     pill.href = `https://open.spotify.com/track/${s.track_id}`;
     cover.src = s.album_art_url || defaultCover;
-    label.textContent = 'Escuchando';
+    label.textContent = L('Escuchando', 'Listening to');
     track.textContent = `${s.song} · ${s.artist.replace(/;/g, ',')}`;
-    pill.setAttribute('aria-label', `Escuchando ${s.song} de ${s.artist} en Spotify`);
+    pill.setAttribute('aria-label', L(`Escuchando ${s.song} de ${s.artist} en Spotify`, `Listening to ${s.song} by ${s.artist} on Spotify`));
 
     clearInterval(progressTimer);
     const { start, end } = s.timestamps || {};
@@ -910,7 +1147,7 @@ const PLAYLIST = [
 
   if (!CONFIG.discordId) {
     setSpotifyIdle();
-    track.textContent = 'Mi perfil de Spotify';
+    track.textContent = L('Mi perfil de Spotify', 'My Spotify profile');
     dText.textContent = 'Discord';
     return;
   }
