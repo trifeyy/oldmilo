@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>oldmilo</title>
+  <title>oldmilo · Gaming, tech y contenido</title>
   <meta name="description" content="Gaming, tech y contenido. Todas mis redes, mi pack de texturas miloPack y cómo contactarme.">
   <meta name="theme-color" content="#08090c">
   <link rel="canonical" href="https://oldmilo.xyz/">
@@ -41,9 +41,20 @@
   <script data-goatcounter="https://oldmilo.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css?v=17">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://api.lanyard.rest">
+  <link rel="preconnect" href="https://i.scdn.co" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+  </noscript>
+  <link rel="stylesheet" href="/style.css?v=18">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://oldmilo.xyz/#web","url":"https://oldmilo.xyz/","name":"oldmilo","inLanguage":"es","publisher":{"@id":"https://oldmilo.xyz/#oldmilo"}},{"@type":"ProfilePage","url":"https://oldmilo.xyz/","name":"oldmilo","isPartOf":{"@id":"https://oldmilo.xyz/#web"},"mainEntity":{"@type":"Person","@id":"https://oldmilo.xyz/#oldmilo","name":"oldmilo","alternateName":"Camilo","url":"https://oldmilo.xyz/","image":"https://oldmilo.xyz/foto.jpg","description":"Gaming, tech y contenido.","sameAs":["https://www.youtube.com/@oldmiilo","https://twitch.tv/plaiices","https://www.instagram.com/camilo.magiic/","https://www.tiktok.com/@user81737491837","https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky"]}}]}
+  </script>
 </head>
 <body>
 
@@ -83,7 +94,7 @@
 
         <!-- Parte de atrás -->
         <div class="card-back" id="cardBack" aria-hidden="true">
-          <img class="card-back-qr" src="/qr.svg" alt="Código QR de oldmilo.xyz" width="180" height="180">
+          <img class="card-back-qr" src="/qr.svg" alt="Código QR de oldmilo.xyz" width="180" height="180" decoding="async">
           <strong>oldmilo.xyz</strong>
           <small>Escanéame. Toca para volver.</small>
         </div>
@@ -116,7 +127,7 @@
 
         <!-- Spotify -->
         <a class="spotify-pill animate-item" data-goatcounter-click="clic-spotify-estado" id="spotifyPill" href="https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky" target="_blank" rel="noopener" aria-label="Mi perfil de Spotify">
-          <img class="spotify-cover" id="spotifyCover" src="/foto.jpg" alt="" width="30" height="30">
+          <img class="spotify-cover" id="spotifyCover" src="/foto.jpg" alt="" width="30" height="30" decoding="async">
           <span class="spotify-text">
             <span class="spotify-label" id="spotifyLabel">Spotify</span>
             <span class="spotify-track" id="spotifyTrack">Mi perfil de Spotify</span>
@@ -167,7 +178,7 @@
             <span class="discord-user" id="discordUser">@plaices</span>
             <span class="discord-status-text" id="discordStatus">Discord</span>
           </span>
-          <img class="discord-game" id="discordGame" alt="" width="30" height="30" hidden>
+          <img class="discord-game" id="discordGame" alt="" width="30" height="30" hidden decoding="async">
         </a>
 
         <div class="card-foot animate-item">
@@ -205,7 +216,7 @@
 
       <div class="player" id="player">
         <div class="player-now">
-          <img class="player-cover" id="playerCover" src="" alt="" width="64" height="64">
+          <img class="player-cover" id="playerCover" src="" alt="" width="64" height="64" decoding="async">
           <div class="player-meta">
             <span class="player-title" id="playerTitle"></span>
             <span class="player-artist" id="playerArtist"></span>
@@ -259,7 +270,7 @@
       <button class="dialog-close" type="button" data-close aria-label="Cerrar">×</button>
       <h2 class="dialog-title" id="shareTitle">Compartir</h2>
       <p class="dialog-text">Escanea el código o pásale el enlace a quien quieras.</p>
-      <div class="qr-wrap"><img src="/qr.svg" alt="Código QR de oldmilo.xyz" width="220" height="220"></div>
+      <div class="qr-wrap"><img src="/qr.svg" alt="Código QR de oldmilo.xyz" width="220" height="220" decoding="async"></div>
       <div class="copy-box">
         <span id="shareText">oldmilo.xyz</span>
         <button class="copy-btn" type="button" data-copy="#shareText" data-goatcounter-click="copiar-enlace" aria-live="polite">Copiar</button>
@@ -269,6 +280,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=17"></script>
+  <script src="/script.js?v=18"></script>
 </body>
 </html>

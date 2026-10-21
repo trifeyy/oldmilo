@@ -74,8 +74,10 @@ const PLAYLIST = [
       requestAnimationFrame(step);
     };
 
-    const fonts = document.fonts ? document.fonts.load('700 40px "Clash Display"') : Promise.resolve();
-    Promise.race([fonts, later(600)]).catch(() => { }).then(() => requestAnimationFrame(run));
+    const sheet = document.querySelector('link[href*="fontshare"]');
+    const sheetReady = !sheet || sheet.media === 'all' ? Promise.resolve() : new Promise((r) => { sheet.addEventListener('load', r, { once: true }); sheet.addEventListener('error', r, { once: true }); });
+    const fonts = sheetReady.then(() => (document.fonts ? document.fonts.load('700 40px "Clash Display"') : null));
+    Promise.race([fonts, later(700)]).catch(() => { }).then(() => requestAnimationFrame(run));
   } else {
     if (loader) loader.remove();
     requestAnimationFrame(reveal);
@@ -496,6 +498,8 @@ const PLAYLIST = [
           height: 80
         }, (c) => {
           controller = c;
+          const frame = document.querySelector('.player-embed iframe');
+          if (frame && !frame.title) frame.title = 'Reproductor de Spotify';
           c.addListener('ready', () => {
             if (playWhenReady) { playWhenReady = false; c.play(); }
           });
