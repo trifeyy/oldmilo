@@ -28,7 +28,7 @@
     try { if (sessionStorage.getItem('om-wipe')) document.documentElement.classList.add('wipe-pending'); } catch (e) { }
     if (location.pathname.startsWith('/en/')) { document.documentElement.lang = 'en'; document.title = 'Page not found - oldmilo'; }
     try {
-      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+      if (localStorage.getItem('om-visited') || sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
         document.documentElement.classList.add('no-loader');
     } catch (e) { document.documentElement.classList.add('no-loader'); }
     try {
@@ -51,7 +51,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=26">
+  <link rel="stylesheet" href="/style.css?v=27">
 </head>
 <body class="is-404">
 
@@ -93,6 +93,6 @@
     document.getElementById('errorPath').textContent = location.pathname;
   </script>
 
-  <script src="/script.js?v=26"></script>
+  <script src="/script.js?v=27"></script>
 </body>
 </html>

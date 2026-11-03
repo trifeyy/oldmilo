@@ -30,7 +30,7 @@
     document.documentElement.classList.add('js');
     try { if (sessionStorage.getItem('om-wipe')) document.documentElement.classList.add('wipe-pending'); } catch (e) { }
     try {
-      if (sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
+      if (localStorage.getItem('om-visited') || sessionStorage.getItem('om-visited') || matchMedia('(prefers-reduced-motion: reduce)').matches)
         document.documentElement.classList.add('no-loader');
     } catch (e) { document.documentElement.classList.add('no-loader'); }
     try {
@@ -62,7 +62,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=26">
+  <link rel="stylesheet" href="/style.css?v=27">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://oldmilo.xyz/en/#web","url":"https://oldmilo.xyz/en/","name":"oldmilo","inLanguage":"en","publisher":{"@id":"https://oldmilo.xyz/#oldmilo"}},{"@type":"ProfilePage","url":"https://oldmilo.xyz/en/","name":"oldmilo","isPartOf":{"@id":"https://oldmilo.xyz/en/#web"},"mainEntity":{"@type":"Person","@id":"https://oldmilo.xyz/#oldmilo","name":"oldmilo","alternateName":"Camilo","url":"https://oldmilo.xyz/","image":"https://oldmilo.xyz/foto.jpg","description":"Gaming, tech and content.","sameAs":["https://www.youtube.com/@oldmiilo","https://twitch.tv/plaiices","https://www.instagram.com/camilo.magiic/","https://www.tiktok.com/@user81737491837","https://open.spotify.com/user/31m6ciqimxrfobgx45ibn7wowaky"]}}]}
   </script>
@@ -105,7 +105,7 @@
 
         <!-- Parte de atrás -->
         <div class="card-back" id="cardBack" aria-hidden="true">
-          <img class="card-back-qr" src="/qr.svg" alt="QR code for oldmilo.xyz" width="180" height="180" decoding="async">
+          <img class="card-back-qr" src="/qr.svg" alt="QR code for oldmilo.xyz" width="180" height="180" loading="lazy" decoding="async">
           <strong>oldmilo.xyz</strong>
           <small>Scan me. Tap to flip back.</small>
         </div>
@@ -237,7 +237,7 @@
 
       <div class="player" id="player">
         <div class="player-now">
-          <img class="player-cover" id="playerCover" src="" alt="" width="64" height="64" decoding="async">
+          <img class="player-cover" id="playerCover" alt="" width="64" height="64" decoding="async">
           <div class="player-meta">
             <span class="player-title" id="playerTitle"></span>
             <span class="player-artist" id="playerArtist"></span>
@@ -291,7 +291,7 @@
       <button class="dialog-close" type="button" data-close aria-label="Close">×</button>
       <h2 class="dialog-title" id="shareTitle">Share</h2>
       <p class="dialog-text">Scan the code or send the link to anyone you like.</p>
-      <div class="qr-wrap"><img src="/qr.svg" alt="QR code for oldmilo.xyz" width="220" height="220" decoding="async"></div>
+      <div class="qr-wrap"><img src="/qr.svg" alt="QR code for oldmilo.xyz" width="220" height="220" loading="lazy" decoding="async"></div>
       <div class="copy-box">
         <span id="shareText">oldmilo.xyz</span>
         <button class="copy-btn" type="button" data-copy="#shareText" data-goatcounter-click="copiar-enlace" aria-live="polite">Copy</button>
@@ -301,6 +301,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=26"></script>
+  <script src="/script.js?v=27"></script>
 </body>
 </html>

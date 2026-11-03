@@ -3529,3 +3529,59 @@ button.wall-preview { display: block; width: 100%; padding: 0; border: 0; cursor
 .now-ic { justify-self: start; width: fit-content; transform-origin: 50% 60%; will-change: transform; }
 .now-list li:hover .now-ic { transform: scale(1.18) rotate(-8deg); }
 .now-list li:not(.about-list li) .now-ic { justify-self: center; }
+
+/* =========================================================
+   RENDIMIENTO
+   ========================================================= */
+/* 1. Loader mas corto */
+.ld-frame { animation-duration: 0.55s; animation-delay: 0.05s; }
+.ld-m { animation-duration: 0.45s; animation-delay: 0.3s; }
+.ld-name { animation-duration: 0.5s; animation-delay: 0.4s; }
+.ld-glow { animation-duration: 0.6s; animation-delay: 0.6s; }
+
+/* 2. Cortina mas rapida */
+.wipe.is-in .wipe-a { transition-duration: 0.34s; }
+.wipe.is-in .wipe-b { transition-duration: 0.34s; transition-delay: 0.04s; }
+.wipe.is-in .wipe-logo { transition-delay: 0.18s, 0.18s; }
+
+/* 3. Entrada sin esperas largas */
+.js .animate-item, body.loaded .animate-item:nth-child(n) { transition-delay: calc(min(var(--i, 0), 8) * 50ms + 30ms); }
+.split .ch { transition-delay: calc(min(var(--c), 14) * 30ms + 120ms); }
+
+/* 4. Movil: sin desenfoques animados */
+@media (hover: none), (max-width: 700px) {
+  .blob { filter: none; animation: none !important; }
+  .blob-a { background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.13), transparent); width: 760px; height: 760px; top: -260px; left: -260px; }
+  .blob-b { background: radial-gradient(closest-side, rgba(130, 140, 175, 0.12), transparent); width: 700px; height: 700px; bottom: -240px; right: -240px; }
+  .blob-c { background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.07), transparent); width: 520px; height: 520px; }
+  .js .animate-item, .reveal-ready .reveal, .dialog { filter: none !important; }
+  .js .animate-item { transition-property: opacity, transform; }
+  .reveal-ready .reveal { transition-property: opacity, transform; }
+}
+
+/* 5. Reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none !important; }
+  .reveal-ready .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .dialog { filter: none !important; }
+  .avatar-wrap[data-ring="play"]::before { animation: none !important; }
+}
+.wipe.is-out .wipe-b { transition-duration: 0.48s; }
+.wipe.is-out .wipe-a { transition-duration: 0.48s; transition-delay: 0.05s; }
+
+/* 6. Moviles pequeños */
+@media (hover: none) { .cursor-ring, .cursor-dot { display: none !important; } }
+.hero-stat { min-width: 0; }
+@media (max-width: 380px) {
+  .sub-header .sub-title { font-size: 20px; }
+  .hero-stat { padding: 9px 4px; }
+  .hero-stat strong { font-size: 11.5px; }
+  .hero-stat small { font-size: 8.5px; letter-spacing: 0; }
+  .sub-header { gap: 10px; }
+  .sub-header .is-small-avatar, .sub-header .pack-logo.is-small { display: none; }
+  .wall-btns .dl-btn small { font-size: 9px; white-space: nowrap; }
+  .gear-card.is-feature { flex-direction: column; }
+  .gear-card.is-feature .gear-media { flex-basis: auto; min-height: 92px; border-right: 0; border-bottom: 1px solid var(--glass-border); }
+  .gear-card.is-feature .gear-media svg { width: 42px; height: 42px; }
+  .gear-card.is-feature .gear-name { font-size: 16px; }
+}

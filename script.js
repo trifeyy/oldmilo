@@ -45,7 +45,7 @@ const PLAYLIST = [
     });
   }
 
-  try { sessionStorage.setItem('om-visited', '1'); } catch (e) { }
+  try { localStorage.setItem('om-visited', '1'); sessionStorage.setItem('om-visited', '1'); } catch (e) { }
 
   if (loader && !root.classList.contains('no-loader')) {
     const percent = document.getElementById('loaderPercent');
@@ -62,14 +62,14 @@ const PLAYLIST = [
         const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         keys.push({ transform: `translateZ(0) scale(${Math.pow(end, e)})` });
       }
-      return win.animate(keys, { duration: 1100, easing: 'linear', fill: 'forwards' }).finished;
+      return win.animate(keys, { duration: 620, easing: 'linear', fill: 'forwards' }).finished;
     };
 
     const open = async () => {
       loader.classList.add('is-open');
-      await later(220);
+      await later(120);
       loader.classList.add('is-clear');
-      await later(260);
+      await later(160);
       await frame();
       reveal();
       loader.setAttribute('aria-hidden', 'true');
@@ -79,7 +79,7 @@ const PLAYLIST = [
 
     const run = () => {
       loader.classList.add('is-go');
-      const duration = 2200;
+      const duration = 800;
       const start = performance.now();
       let last = -1;
       const step = (now) => {
@@ -88,7 +88,7 @@ const PLAYLIST = [
         const n = Math.floor(eased * 100);
         if (n !== last && percent) { percent.textContent = n; last = n; }
         if (p < 1) return requestAnimationFrame(step);
-        setTimeout(open, 180);
+        setTimeout(open, 80);
       };
       requestAnimationFrame(step);
     };
@@ -96,12 +96,12 @@ const PLAYLIST = [
     const sheet = document.querySelector('link[href*="fontshare"]');
     const sheetReady = !sheet || sheet.media === 'all' ? Promise.resolve() : new Promise((r) => { sheet.addEventListener('load', r, { once: true }); sheet.addEventListener('error', r, { once: true }); });
     const fonts = sheetReady.then(() => (document.fonts ? document.fonts.load('700 40px "Clash Display"') : null));
-    Promise.race([fonts, later(700)]).catch(() => { }).then(() => requestAnimationFrame(run));
+    Promise.race([fonts, later(250)]).catch(() => { }).then(() => requestAnimationFrame(run));
   } else {
     if (loader) loader.remove();
     const items = document.querySelectorAll('.animate-item');
     items.forEach((el, i) => el.style.setProperty('--i', i));
-    setTimeout(() => requestAnimationFrame(reveal), root.classList.contains('wipe-pending') ? 240 : 0);
+    setTimeout(() => requestAnimationFrame(reveal), root.classList.contains('wipe-pending') ? 90 : 0);
   }
 
   // 2. Edad
@@ -348,13 +348,31 @@ const PLAYLIST = [
     return w;
   };
 
+  // 7b. Precarga: las paginas internas se piden antes de hacer clic
+  const warmed = new Set();
+  const warm = (href) => {
+    const u = new URL(href, location.href);
+    if (u.origin !== location.origin || warmed.has(u.pathname) || u.pathname === location.pathname) return;
+    if (/\.(png|jpe?g|webp|svg|zip|mp4)$/i.test(u.pathname)) return;
+    warmed.add(u.pathname);
+    try { fetch(u.pathname, { credentials: 'same-origin', priority: 'low' }).catch(() => { }); } catch (e) { }
+  };
+  const warmLinks = () => document.querySelectorAll('a[href^="/"]').forEach((a) => warm(a.href));
+  const idle = window.requestIdleCallback || ((f) => setTimeout(f, 1800));
+  window.addEventListener('load', () => idle(warmLinks), { once: true });
+  ['pointerover', 'touchstart', 'focusin'].forEach((ev) => document.addEventListener(ev, (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (a) warm(a.href);
+  }, { passive: true }));
+
   const navigate = (href) => {
     if (reduceMotion) { location.href = href; return; }
     const w = makeWipe();
     void w.offsetWidth;
     w.classList.add('is-in');
     try { sessionStorage.setItem('om-wipe', '1'); } catch (e) { }
-    setTimeout(() => { location.href = href; }, 560);
+    warm(href);
+    setTimeout(() => { location.href = href; }, 360);
   };
 
   if (root.classList.contains('wipe-pending')) {
@@ -365,7 +383,7 @@ const PLAYLIST = [
       w.classList.add('is-covering');
       root.classList.remove('wipe-pending');
       requestAnimationFrame(() => requestAnimationFrame(() => w.classList.add('is-out')));
-      setTimeout(() => w.remove(), 1200);
+      setTimeout(() => w.remove(), 900);
     }
   }
 
