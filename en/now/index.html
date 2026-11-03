@@ -60,7 +60,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=22">
+  <link rel="stylesheet" href="/style.css?v=23">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"oldmilo","item":"https://oldmilo.xyz/en/"},{"@type":"ListItem","position":2,"name":"Now","item":"https://oldmilo.xyz/en/now/"}]}
   </script>
@@ -75,14 +75,19 @@
   </div>
 
   <main class="stage">
-    <div class="card-border-wrap wrap-md">
+    <div class="card-border-wrap wrap-lg">
       <div class="card" id="tiltCard">
         <a class="lang-float" href="/ahora/" hreflang="es" lang="es" data-lang="es" aria-label="Versión en español">ES</a>
 
-        <div class="animate-item">
-          <h1 class="greeting">Now</h1>
-          <div class="handle">What I'm up to this month</div>
-        </div>
+        <header class="sub-header animate-item">
+          <a class="back-btn" href="/en/" aria-label="Back to home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></a>
+          <img class="avatar is-small-avatar" src="/foto.jpg" alt="" width="48" height="48">
+          <div>
+            <p class="eyebrow">oldmilo</p>
+            <h1 class="sub-title">Now</h1>
+          </div>
+        </header>
+        <p class="page-lead animate-item">What I'm up to this month.</p>
 
         <ul class="now-list animate-item">
           <li>
@@ -119,15 +124,10 @@
 
         <p class="now-date animate-item">Updated November 2026</p>
 
-        <a class="action-btn animate-item" href="/en/">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-          Back to home
-        </a>
-
       </div>
     </div>
   </main>
 
-  <script src="/script.js?v=22"></script>
+  <script src="/script.js?v=23"></script>
 </body>
 </html>
