@@ -134,7 +134,8 @@ const PLAYLIST = [
 
   document.querySelectorAll('[data-birthday]').forEach((el) => {
     const span = el.querySelector('span') || el;
-    span.textContent = isBirthday ? L('HOY ES MI CUMPLE', "IT'S MY BIRTHDAY") : daysLeft === 1 ? L('CUMPLO MAÑANA', 'BIRTHDAY TOMORROW') : L(`CUMPLO EN ${daysLeft} DÍAS`, `BIRTHDAY IN ${daysLeft} DAYS`);
+    const t = isBirthday ? L('¡Hoy es mi cumple!', "It's my birthday!") : daysLeft === 1 ? L('Cumplo mañana', 'Birthday tomorrow') : L(`Cumplo en ${daysLeft} días`, `Birthday in ${daysLeft} days`);
+    span.textContent = el.dataset.birthday === 'text' ? t : t.toUpperCase();
     el.hidden = false;
   });
 
