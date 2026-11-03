@@ -32,6 +32,17 @@ const PLAYLIST = [
   // 1. Loader
   const loader = document.getElementById('loader-screen');
   const reveal = () => document.body.classList.add('loaded');
+  document.querySelectorAll('.animate-item').forEach((el, i) => el.style.setProperty('--i', i));
+  // Titulos letra a letra
+  if (!reduceMotion) {
+    document.querySelectorAll('.card h1, .pack-container h1').forEach((h) => {
+      if (h.children.length) return;
+      const word = h.textContent;
+      h.setAttribute('aria-label', word);
+      h.classList.add('split');
+      h.innerHTML = word.split('').map((c, i) => `<span class="ch" aria-hidden="true" style="--c:${i}">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+    });
+  }
 
   try { sessionStorage.setItem('om-visited', '1'); } catch (e) { }
 
@@ -87,7 +98,9 @@ const PLAYLIST = [
     Promise.race([fonts, later(700)]).catch(() => { }).then(() => requestAnimationFrame(run));
   } else {
     if (loader) loader.remove();
-    requestAnimationFrame(reveal);
+    const items = document.querySelectorAll('.animate-item');
+    items.forEach((el, i) => el.style.setProperty('--i', i));
+    setTimeout(() => requestAnimationFrame(reveal), root.classList.contains('wipe-pending') ? 240 : 0);
   }
 
   // 2. Edad
@@ -136,19 +149,39 @@ const PLAYLIST = [
     else if (el.dataset.optional !== undefined) el.hidden = true;
   });
 
-  // 4. Partículas e Inclinación 3D
+  // 4. Cursor e Inclinación 3D
   if (finePointer && !reduceMotion) {
-    let last = 0;
-    document.addEventListener('mousemove', (e) => {
-      const now = performance.now();
-      if (now - last < 40) return;
-      last = now;
-      const s = document.createElement('div');
-      s.className = 'sparkle';
-      s.style.left = e.clientX + (Math.random() * 10 - 5) + 'px';
-      s.style.top = e.clientY + (Math.random() * 10 - 5) + 'px';
-      document.body.appendChild(s);
-      setTimeout(() => s.remove(), 800);
+    const ring = document.createElement('div');
+    const dot = document.createElement('div');
+    ring.className = 'cursor-ring'; dot.className = 'cursor-dot';
+    ring.setAttribute('aria-hidden', 'true'); dot.setAttribute('aria-hidden', 'true');
+    document.body.append(ring, dot);
+    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, seen = false;
+    document.addEventListener('pointermove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      if (!seen) { seen = true; rx = mx; ry = my; root.classList.add('has-cursor'); }
+      const hot = e.target.closest('a, button, [role="slider"], .slot, label');
+      ring.classList.toggle('is-hot', !!hot);
+      ring.classList.toggle('is-text', !!e.target.closest('input, textarea'));
+    });
+    document.addEventListener('pointerdown', () => ring.classList.add('is-down'));
+    document.addEventListener('pointerup', () => ring.classList.remove('is-down'));
+    document.documentElement.addEventListener('mouseleave', () => root.classList.remove('has-cursor'));
+    document.documentElement.addEventListener('mouseenter', () => root.classList.add('has-cursor'));
+    const follow = () => {
+      rx += (mx - rx) * 0.2; ry += (my - ry) * 0.2;
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      requestAnimationFrame(follow);
+    };
+    requestAnimationFrame(follow);
+
+    document.querySelectorAll('.action-btn, .icon-btn, .live-row, .discord-widget, .dl-btn, .chip, .gear-card, .wall-card').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--bx', e.clientX - r.left + 'px');
+        el.style.setProperty('--by', e.clientY - r.top + 'px');
+      });
     });
 
     document.querySelectorAll('.card-border-wrap').forEach((wrap) => {
@@ -304,22 +337,53 @@ const PLAYLIST = [
   });
 
   // 7. Transiciones
-  const nativeVT = 'CSSViewTransitionRule' in window;
-  if (!nativeVT && !reduceMotion) {
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
-      if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      const url = new URL(a.href, location.href);
-      if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
-      e.preventDefault();
-      root.classList.add('is-leaving');
-      setTimeout(() => (location.href = url.href), 280);
-    });
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) root.classList.remove('is-leaving');
-    });
+  const makeWipe = () => {
+    const w = document.createElement('div');
+    w.className = 'wipe';
+    w.setAttribute('aria-hidden', 'true');
+    w.innerHTML = '<i class="wipe-a"></i><i class="wipe-b"></i><img class="wipe-logo" src="/milopack/logo.svg" alt="">';
+    document.body.appendChild(w);
+    return w;
+  };
+
+  const navigate = (href) => {
+    if (reduceMotion) { location.href = href; return; }
+    const w = makeWipe();
+    void w.offsetWidth;
+    w.classList.add('is-in');
+    try { sessionStorage.setItem('om-wipe', '1'); } catch (e) { }
+    setTimeout(() => { location.href = href; }, 560);
+  };
+
+  if (root.classList.contains('wipe-pending')) {
+    try { sessionStorage.removeItem('om-wipe'); } catch (e) { }
+    if (reduceMotion) root.classList.remove('wipe-pending');
+    else {
+      const w = makeWipe();
+      w.classList.add('is-covering');
+      root.classList.remove('wipe-pending');
+      requestAnimationFrame(() => requestAnimationFrame(() => w.classList.add('is-out')));
+      setTimeout(() => w.remove(), 1200);
+    }
   }
+
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || a.target === '_blank' || a.hasAttribute('download')) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || url.protocol.indexOf('http') !== 0) return;
+    if (url.pathname === location.pathname) return;
+    if (/\.(png|jpe?g|webp|svg|zip|mp4)$/i.test(url.pathname)) return;
+    e.preventDefault();
+    navigate(url.href);
+  });
+
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted) return;
+    document.querySelectorAll('.wipe').forEach((w) => w.remove());
+    root.classList.remove('wipe-pending');
+  });
 
   // 8. Easter Egg
   const egg = (() => {
@@ -729,8 +793,18 @@ const PLAYLIST = [
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => {
         if (!d || !d.count) return;
-        document.getElementById('visitNum').textContent = String(d.count).replace(/[,.\s\u202f]/g, L('.', ','));
+        const total = parseInt(String(d.count).replace(/\D/g, ''), 10) || 0;
+        const out = document.getElementById('visitNum');
+        const fmtN = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, EN ? ',' : '.');
         visitBox.hidden = false;
+        if (reduceMotion || !total) { out.textContent = fmtN(total); return; }
+        const t0 = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - t0) / 1400, 1);
+          out.textContent = fmtN(Math.round(total * (1 - Math.pow(1 - p, 4))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
       })
       .catch(() => { });
   }
@@ -757,7 +831,7 @@ const PLAYLIST = [
   if (accentBtn && accentMenu) {
     let saved = ACCENTS[0].rgb;
     try { saved = localStorage.getItem('om-accent') || saved; } catch (e) { }
-    accentMenu.innerHTML = ACCENTS.map((a) => `<button type="button" data-rgb="${a.rgb}" data-id="${a.id}" style="--c:${a.rgb}" aria-label="${a.name}" title="${a.name}" aria-pressed="${a.rgb === saved}"></button>`).join('');
+    (document.getElementById('accentColors') || accentMenu).innerHTML = ACCENTS.map((a) => `<button type="button" data-rgb="${a.rgb}" data-id="${a.id}" style="--c:${a.rgb}" aria-label="${a.name}" title="${a.name}" aria-pressed="${a.rgb === saved}"></button>`).join('');
 
     const toggle = (open) => {
       accentMenu.hidden = !open;
@@ -875,7 +949,7 @@ const PLAYLIST = [
     requestAnimationFrame(tick);
   };
 
-  const go = (path) => () => { location.href = path; };
+  const go = (path) => () => navigate(path);
   const ext = (url) => () => { window.open(url, '_blank', 'noopener'); };
   const has = (id) => !!document.getElementById(id);
   const P = (es, en) => (EN ? en : es);
@@ -903,7 +977,7 @@ const PLAYLIST = [
     { g: L('Acciones', 'Actions'), i: 'act', t: L('Compartir y QR', 'Share and QR code'), k: 'share compartir qr', when: () => has('shareOverlay'), run: () => openModal(document.getElementById('shareOverlay'), document.querySelector('[data-open="shareOverlay"]')) },
     { g: L('Acciones', 'Actions'), i: 'act', t: L('Abrir mi música', 'Open my music'), k: 'musica music spotify canciones songs player', when: () => has('musicOverlay'), run: () => openModal(document.getElementById('musicOverlay'), document.getElementById('musicBtn')) },
     { g: L('Acciones', 'Actions'), i: 'act', t: L('Girar la tarjeta', 'Flip the card'), k: 'girar flip tarjeta card qr', when: () => !!cardFlip, run: () => cardFlip() },
-    { g: L('Acciones', 'Actions'), i: 'lang', t: L('Ver en inglés', 'Ver en español'), k: 'english ingles español spanish idioma language', run: () => { try { localStorage.setItem('om-lang', EN ? 'es' : 'en'); } catch (e) { } location.href = otherLang(); } },
+    { g: L('Acciones', 'Actions'), i: 'lang', t: L('Ver en inglés', 'Ver en español'), k: 'english ingles español spanish idioma language', run: () => { try { localStorage.setItem('om-lang', EN ? 'es' : 'en'); } catch (e) { } navigate(otherLang()); } },
     ...ACCENTS.map((a) => ({ g: 'Color', i: 'dot', c: a.rgb, t: `Color: ${a.name}`, k: 'color colour tema theme ' + a.id + ' ' + a.name.toLowerCase(), run: () => setAccent(a.rgb, true) })),
     { g: L('Redes', 'Socials'), i: 'link', t: 'YouTube', k: 'youtube videos', run: ext('https://www.youtube.com/@oldmiilo') },
     { g: L('Redes', 'Socials'), i: 'link', t: 'Twitch', k: 'twitch directo stream live', run: ext('https://twitch.tv/plaiices') },
