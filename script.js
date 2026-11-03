@@ -40,7 +40,8 @@ const PLAYLIST = [
       const word = h.textContent;
       h.setAttribute('aria-label', word);
       h.classList.add('split');
-      h.innerHTML = word.split('').map((c, i) => `<span class="ch" aria-hidden="true" style="--c:${i}">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+      let k = 0;
+      h.innerHTML = word.split(' ').map((w) => `<span class="w" aria-hidden="true">${w.split('').map((c) => `<span class="ch" style="--c:${k++}">${c}</span>`).join('')}</span>`).join(' ');
     });
   }
 
@@ -785,6 +786,95 @@ const PLAYLIST = [
       if (flipCard.classList.contains('is-back')) flip();
     });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && flipCard.classList.contains('is-back')) flip(); });
+  }
+
+  // 15b. Visor de fondos
+  const walls = [...document.querySelectorAll('.wall-card[data-wall]')];
+  if (walls.length) {
+    const v = document.createElement('div');
+    v.className = 'viewer';
+    v.hidden = true;
+    v.setAttribute('role', 'dialog');
+    v.setAttribute('aria-modal', 'true');
+    v.innerHTML = `
+      <button class="viewer-close" type="button" aria-label="${L('Cerrar', 'Close')}">×</button>
+      <button class="viewer-nav is-prev" type="button" aria-label="${L('Anterior', 'Previous')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="viewer-nav is-next" type="button" aria-label="${L('Siguiente', 'Next')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <figure class="viewer-stage"><div class="viewer-shot"><img class="viewer-pc" alt=""><img class="viewer-phone" alt=""></div></figure>
+      <div class="viewer-info"><div><h2 class="viewer-name"></h2><p class="viewer-desc"></p></div><div class="viewer-btns wall-btns"></div><span class="viewer-count"></span></div>`;
+    document.body.appendChild(v);
+    const pc = v.querySelector('.viewer-pc'), ph = v.querySelector('.viewer-phone');
+    let cur = 0, lastFocus = null;
+
+    const fill = (i) => {
+      const c = walls[i], n = c.dataset.wall;
+      pc.src = `/fondos/vistas/${n}-pc.webp`;
+      ph.src = `/fondos/vistas/${n}-movil.webp`;
+      const hd = new Image(); hd.onload = () => { if (cur === i) pc.src = hd.src; }; hd.src = `/fondos/vistas/${n}-pc-hd.webp`;
+      const hp = new Image(); hp.onload = () => { if (cur === i) ph.src = hp.src; }; hp.src = `/fondos/vistas/${n}-movil-hd.webp`;
+      pc.alt = c.querySelector('.wall-pc').alt; ph.alt = c.querySelector('.wall-phone').alt;
+      v.querySelector('.viewer-name').textContent = c.querySelector('.wall-name').textContent;
+      v.querySelector('.viewer-desc').textContent = c.querySelector('.wall-desc').textContent;
+      v.querySelector('.viewer-btns').innerHTML = c.querySelector('.wall-btns').innerHTML;
+      v.querySelector('.viewer-count').textContent = `${i + 1} / ${walls.length}`;
+      v.setAttribute('aria-label', v.querySelector('.viewer-name').textContent);
+    };
+
+    const open = (i) => {
+      cur = i; lastFocus = document.activeElement; fill(i);
+      const from = walls[i].querySelector('.wall-pc').getBoundingClientRect();
+      v.hidden = false;
+      document.querySelector('main')?.setAttribute('inert', '');
+      requestAnimationFrame(() => {
+        v.classList.add('is-open');
+        const to = pc.getBoundingClientRect();
+        if (!reduceMotion && to.width) {
+          const sx = from.width / to.width, sy = from.height / to.height;
+          const dx = from.left + from.width / 2 - (to.left + to.width / 2), dy = from.top + from.height / 2 - (to.top + to.height / 2);
+          pc.animate([{ transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, borderRadius: '18px' }, { transform: 'none', borderRadius: '14px' }],
+            { duration: 700, easing: 'cubic-bezier(0.22, 1.2, 0.36, 1)' });
+        }
+        v.querySelector('.viewer-close').focus();
+      });
+      window.goatcounter?.count?.({ path: 'ver-fondo-' + walls[i].dataset.wall, title: 'Ver fondo', event: true });
+    };
+
+    const close = () => {
+      v.classList.remove('is-open');
+      document.querySelector('main')?.removeAttribute('inert');
+      setTimeout(() => { v.hidden = true; }, reduceMotion ? 0 : 320);
+      lastFocus?.focus?.();
+    };
+
+    const step = (d) => {
+      const next = (cur + d + walls.length) % walls.length;
+      if (reduceMotion) { cur = next; fill(next); return; }
+      const out = [{ transform: 'none', opacity: 1 }, { transform: `translateX(${-d * 60}px) scale(0.96)`, opacity: 0 }];
+      Promise.all([pc, ph].map((el) => el.animate(out, { duration: 200, easing: 'ease-in', fill: 'forwards' }).finished)).then(() => {
+        cur = next; fill(next);
+        [pc, ph].forEach((el, k) => el.animate([{ transform: `translateX(${d * 60}px) scale(0.96)`, opacity: 0 }, { transform: 'none', opacity: 1 }],
+          { duration: 520, delay: k * 60, easing: 'cubic-bezier(0.22, 1.2, 0.36, 1)', fill: 'forwards' }));
+      });
+    };
+
+    walls.forEach((c, i) => c.querySelector('.wall-preview').addEventListener('click', () => open(i)));
+    v.querySelector('.viewer-close').addEventListener('click', close);
+    v.querySelector('.is-prev').addEventListener('click', () => step(-1));
+    v.querySelector('.is-next').addEventListener('click', () => step(1));
+    v.addEventListener('click', (e) => { if (e.target === v) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (v.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'ArrowRight') step(1);
+      else if (e.key === 'ArrowLeft') step(-1);
+    });
+    let tx = null;
+    v.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+    v.addEventListener('touchend', (e) => {
+      if (tx === null) return;
+      const dx = e.changedTouches[0].clientX - tx; tx = null;
+      if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+    });
   }
 
   // 16. Visitas

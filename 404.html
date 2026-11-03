@@ -14,7 +14,7 @@
   <meta property="og:title" content="Página no encontrada - oldmilo">
   <meta property="og:description" content="Esta página no existe.">
   <meta property="og:url" content="https://oldmilo.xyz/404.html">
-  <meta property="og:image" content="https://oldmilo.xyz/og.png">
+  <meta property="og:image" content="https://oldmilo.xyz/og.png?v=3">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="oldmilo">
@@ -51,9 +51,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
   </noscript>
-  <link rel="stylesheet" href="/style.css?v=23">
+  <link rel="stylesheet" href="/style.css?v=25">
 </head>
-<body>
+<body class="is-404">
 
   <div class="bg" aria-hidden="true">
     <div class="bg-grid"></div>
@@ -71,13 +71,13 @@
         </div>
 
         <div class="animate-item">
-          <h1 class="greeting" data-en="You're lost">Te has perdido</h1>
-          <p class="error-text" data-en="This page doesn't exist or I moved it. Double-check the link or head back home.">Esta página no existe o la he movido. Revisa el enlace o vuelve al inicio.</p>
+          <h1 class="greeting" data-en="You fell out of the world">Has caído del mundo</h1>
+          <p class="error-text" data-en="This page doesn't exist or I moved it. Hit respawn to head back home.">Esta página no existe o la he movido. Pulsa reaparecer para volver al inicio.</p>
           <p class="error-path" id="errorPath"></p>
         </div>
 
         <div class="actions animate-item">
-          <a class="action-btn primary" href="/" data-en-href="/en/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> <span data-en="Back to home">Volver al inicio</span></a>
+          <a class="action-btn primary" href="/" data-en-href="/en/"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg> <span data-en="Respawn">Reaparecer</span></a>
           <div class="actions-grid">
             <a class="action-btn" href="/milopack/" data-en-href="/en/milopack/">miloPack</a>
             <a class="action-btn" href="/setup/" data-en-href="/en/setup/" data-en="My setup">Mi setup</a>
@@ -93,6 +93,6 @@
     document.getElementById('errorPath').textContent = location.pathname;
   </script>
 
-  <script src="/script.js?v=23"></script>
+  <script src="/script.js?v=25"></script>
 </body>
 </html>
