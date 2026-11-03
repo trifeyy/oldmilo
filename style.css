@@ -3521,3 +3521,11 @@ button.wall-preview { display: block; width: 100%; padding: 0; border: 0; cursor
 .is-404 .action-btn.primary .ico { width: 17px; height: 17px; }
 .is-404 .action-btn.primary:hover .ico { animation: spin-once 0.7s var(--spring); }
 @keyframes spin-once { to { transform: rotate(-360deg); } }
+
+/* Arreglos: aro centrado en la foto y emojis que giran en su sitio */
+.avatar-wrap, .pack-logo-wrap { line-height: 0; }
+.avatar-wrap .avatar, .pack-logo-wrap .pack-logo { display: block; }
+
+.now-ic { justify-self: start; width: fit-content; transform-origin: 50% 60%; will-change: transform; }
+.now-list li:hover .now-ic { transform: scale(1.18) rotate(-8deg); }
+.now-list li:not(.about-list li) .now-ic { justify-self: center; }
